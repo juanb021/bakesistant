@@ -1,5 +1,12 @@
+import 'package:app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+ThemeData tema = ThemeData(
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: const Color.fromARGB(255, 0, 128, 0),
+  ),
+);
 
 void main() {
   runApp(
@@ -14,13 +21,10 @@ class Bakesistant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Bakesistant',
-      home: Scaffold(
-        body: Center(
-          child: Text('Placeholder'),
-        ),
-      ),
+      theme: tema,
+      home: const HomeScreen(),
     );
   }
 }
