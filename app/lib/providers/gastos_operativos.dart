@@ -11,12 +11,11 @@ class GastosNotifier extends StateNotifier<GastosAdministrativos> {
             nomina: 0,
             papeleria: 0,
             servicios: 0,
-            impuestos: 0,
           ),
         );
 
   void setGastos(double alquiler, double depreciacion, double gVentas,
-      double nomina, double papeleria, double servicios, double impuestos) {
+      double nomina, double papeleria, double servicios) {
     state = GastosAdministrativos(
       alquiler: alquiler,
       depreciacion: depreciacion,
@@ -24,8 +23,17 @@ class GastosNotifier extends StateNotifier<GastosAdministrativos> {
       nomina: nomina,
       papeleria: papeleria,
       servicios: servicios,
-      impuestos: impuestos,
     );
+  }
+
+  double calcularTotalGastos() {
+    double total = state.alquiler +
+        state.depreciacion +
+        state.gVentas +
+        state.nomina +
+        state.papeleria +
+        state.servicios;
+    return total;
   }
 }
 

@@ -1,15 +1,17 @@
+import 'package:app/widgets/expenses_screen/expense_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ExpensesScreen extends StatelessWidget {
+class ExpensesScreen extends ConsumerWidget {
   const ExpensesScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
-      body: const Center(
-        child: Text('Placeholder for Expenses'),
-      ),
-    );
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.primaryFixedDim,
+          title: const Text('Configura tus gastos'),
+        ),
+        body: const SingleChildScrollView(child: ExpenseForm()));
   }
 }

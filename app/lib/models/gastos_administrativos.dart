@@ -6,7 +6,6 @@ class GastosAdministrativos {
     required this.nomina,
     required this.papeleria,
     required this.servicios,
-    required this.impuestos,
   });
 
   final double nomina;
@@ -15,5 +14,4 @@ class GastosAdministrativos {
   final double gVentas;
   final double papeleria;
   final double servicios;
-  final double impuestos;
 }

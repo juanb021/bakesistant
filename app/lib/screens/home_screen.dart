@@ -34,10 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primaryFixedDim,
-        body: _buildContent(),
-        bottomNavigationBar: BotNavigation(
-            selectedPage: _selectedPageIndex, onSelectPage: _selectPage));
+    return SafeArea(
+      child: Scaffold(
+          body: _buildContent(),
+          bottomNavigationBar: BotNavigation(
+              selectedPage: _selectedPageIndex, onSelectPage: _selectPage)),
+    );
   }
 }
