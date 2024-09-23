@@ -30,285 +30,274 @@ class ExpenseForm extends ConsumerWidget {
           alquiler, depreciacion, gVentas, nomina, papeleria, servicios);
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).colorScheme.primary,
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(16),
-              color: Theme.of(context).colorScheme.primaryFixed,
-            ),
-            child: Form(
-              key: form,
-              child: Column(
-                children: [
-                  TextFormField(
-                    initialValue: gastos.alquiler.toString(),
-                    decoration: InputDecoration(
-                      labelText: 'Alquiler',
-                      labelStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    autocorrect: false,
-                    style: TextStyle(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+          padding: const EdgeInsets.all(7),
+          child: Form(
+            key: form,
+            child: Column(
+              children: [
+                TextFormField(
+                  initialValue: gastos.alquiler.toString(),
+                  decoration: InputDecoration(
+                    labelText: 'Alquiler',
+                    labelStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20,
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      double parsedValue = double.tryParse(value)!;
-                      if (parsedValue < 0) {
-                        return 'El valor debe ser mayor o igual a 0.';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      alquiler = double.parse(value!);
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    initialValue: gastos.depreciacion.toString(),
-                    decoration: InputDecoration(
-                      labelText: 'Depreciacion',
-                      labelStyle: TextStyle(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
                         color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
                       ),
                     ),
-                    keyboardType: TextInputType.number,
-                    autocorrect: false,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      double parsedValue = double.tryParse(value)!;
-                      if (parsedValue < 0) {
-                        return 'El valor debe ser mayor o igual a 0.';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      depreciacion = double.parse(value!);
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    initialValue: gastos.gVentas.toString(),
-                    decoration: InputDecoration(
-                      labelText: 'Gastos de ventas',
-                      labelStyle: TextStyle(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
                         color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
                       ),
                     ),
-                    keyboardType: TextInputType.number,
-                    autocorrect: false,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      double parsedValue = double.tryParse(value)!;
-                      if (parsedValue < 0) {
-                        return 'El valor debe ser mayor o igual a 0.';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      gVentas = double.parse(value!);
-                    },
                   ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    initialValue: gastos.nomina.toString(),
-                    decoration: InputDecoration(
-                      labelText: 'Nomina',
-                      labelStyle: TextStyle(
+                  keyboardType: TextInputType.number,
+                  autocorrect: false,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    double parsedValue = double.tryParse(value)!;
+                    if (parsedValue < 0) {
+                      return 'El valor debe ser mayor o igual a 0.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    alquiler = double.parse(value!);
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  initialValue: gastos.depreciacion.toString(),
+                  decoration: InputDecoration(
+                    labelText: 'Depreciacion',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
                         color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
                       ),
                     ),
-                    keyboardType: TextInputType.number,
-                    autocorrect: false,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      double parsedValue = double.tryParse(value)!;
-                      if (parsedValue < 0) {
-                        return 'El valor debe ser mayor o igual a 0.';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      nomina = double.parse(value!);
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    initialValue: gastos.papeleria.toString(),
-                    decoration: InputDecoration(
-                      labelText: 'Papeleria',
-                      labelStyle: TextStyle(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
                         color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
                       ),
                     ),
-                    keyboardType: TextInputType.number,
-                    autocorrect: false,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      double parsedValue = double.tryParse(value)!;
-                      if (parsedValue < 0) {
-                        return 'El valor debe ser mayor o igual a 0.';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      papeleria = double.parse(value!);
-                    },
                   ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    initialValue: gastos.servicios.toString(),
-                    decoration: InputDecoration(
-                      labelText: 'Servicios',
-                      labelStyle: TextStyle(
+                  keyboardType: TextInputType.number,
+                  autocorrect: false,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    double parsedValue = double.tryParse(value)!;
+                    if (parsedValue < 0) {
+                      return 'El valor debe ser mayor o igual a 0.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    depreciacion = double.parse(value!);
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  initialValue: gastos.gVentas.toString(),
+                  decoration: InputDecoration(
+                    labelText: 'Gastos de ventas',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
                         color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
                       ),
                     ),
-                    keyboardType: TextInputType.number,
-                    autocorrect: false,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Por favor, introduce un valor numérico.';
-                      }
-                      double parsedValue = double.tryParse(value)!;
-                      if (parsedValue < 0) {
-                        return 'El valor debe ser mayor o igual a 0.';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      servicios = double.parse(value!);
-                    },
                   ),
-                ],
-              ),
+                  keyboardType: TextInputType.number,
+                  autocorrect: false,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    double parsedValue = double.tryParse(value)!;
+                    if (parsedValue < 0) {
+                      return 'El valor debe ser mayor o igual a 0.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    gVentas = double.parse(value!);
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  initialValue: gastos.nomina.toString(),
+                  decoration: InputDecoration(
+                    labelText: 'Nomina',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  autocorrect: false,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    double parsedValue = double.tryParse(value)!;
+                    if (parsedValue < 0) {
+                      return 'El valor debe ser mayor o igual a 0.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    nomina = double.parse(value!);
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  initialValue: gastos.papeleria.toString(),
+                  decoration: InputDecoration(
+                    labelText: 'Papeleria',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  autocorrect: false,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    double parsedValue = double.tryParse(value)!;
+                    if (parsedValue < 0) {
+                      return 'El valor debe ser mayor o igual a 0.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    papeleria = double.parse(value!);
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  initialValue: gastos.servicios.toString(),
+                  decoration: InputDecoration(
+                    labelText: 'Servicios',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  autocorrect: false,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Por favor, introduce un valor numérico.';
+                    }
+                    double parsedValue = double.tryParse(value)!;
+                    if (parsedValue < 0) {
+                      return 'El valor debe ser mayor o igual a 0.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    servicios = double.parse(value!);
+                  },
+                ),
+              ],
             ),
           ),
-          Boton(onTap: submit, texto: 'Actualizar informacion'),
-        ],
-      ),
+        ),
+        Boton(onTap: submit, texto: 'Actualizar informacion'),
+      ],
     );
   }
 }

@@ -15,19 +15,12 @@ class Boton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.primaryFixedDim,
+        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
         padding: const EdgeInsets.symmetric(
           horizontal: 32,
           vertical: 12,
         ),
         minimumSize: const Size(250, 36),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(36),
-          side: BorderSide(
-            width: 2,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
       ),
       child: Text(
         texto,

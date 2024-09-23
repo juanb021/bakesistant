@@ -9,7 +9,7 @@ class ExpensesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primaryFixedDim,
+          backgroundColor: Theme.of(context).colorScheme.primaryFixed,
           title: const Text('Configura tus gastos'),
         ),
         body: const SingleChildScrollView(child: ExpenseForm()));
