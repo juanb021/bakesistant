@@ -7,11 +7,12 @@ import 'package:app/models/gastos_administrativos.dart';
 
 Future<Database> _getDatabase() async {
   final dbpath = await sql.getDatabasesPath();
+  // print('Database path: $dbpath');
   final db = await sql.openDatabase(
     path.join(dbpath, 'bakesistant.db'),
     onCreate: (db, version) {
       return db.execute("""CREATE TABLE user_expenses(
-          id PRIMARY KEY,
+          id INTEGER PRIMARY KEY,
           alquiler REAL,
           depreciacion REAL,
           gventas REAl,
@@ -42,35 +43,41 @@ class GastosNotifier extends StateNotifier<GastosAdministrativos> {
       double nomina, double papeleria, double servicios) async {
     final db = await _getDatabase();
 
-    db.insert('user_expenses', {
-      'id': 1,
-      'alquiler': alquiler,
-      'depreciacion': depreciacion,
-      'gventas': gVentas,
-      'nomina': nomina,
-      'papeleria': papeleria,
-      'servicios': servicios,
-      'total': calcularTotalGastos()
-    });
+    db.insert(
+      'user_expenses',
+      {
+        'id': 1,
+        'alquiler': alquiler,
+        'depreciacion': depreciacion,
+        'gventas': gVentas,
+        'nomina': nomina,
+        'papeleria': papeleria,
+        'servicios': servicios,
+        'total': calcularTotalGastos()
+      },
+      conflictAlgorithm: sql.ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> loadExpenses() async {
     final db = await _getDatabase();
     final data = await db.query('user_expenses');
-    final expenses = data
-        .map(
-          (row) => GastosAdministrativos(
-              alquiler: row['alquiler'] as double,
-              depreciacion: row['depreciacion'] as double,
-              gVentas: row['gVentas'] as double,
-              nomina: row['nomina'] as double,
-              papeleria: row['papeleria'] as double,
-              servicios: row['servicios'] as double,
-              total: row['total'] as double),
-        )
-        .toList();
+    if (data.isNotEmpty) {
+      final expenses = data
+          .map(
+            (row) => GastosAdministrativos(
+                alquiler: row['alquiler'] as double,
+                depreciacion: row['depreciacion'] as double,
+                gVentas: row['gventas'] as double,
+                nomina: row['nomina'] as double,
+                papeleria: row['papeleria'] as double,
+                servicios: row['servicios'] as double,
+                total: row['total'] as double),
+          )
+          .toList();
 
-    state = expenses[0];
+      state = expenses[0];
+    }
   }
 
   double calcularTotalGastos() {

@@ -19,6 +19,8 @@ class ExpenseForm extends ConsumerWidget {
     double papeleria = 0;
     double servicios = 0;
 
+    debugPrint('alquiler: ${gastos.alquiler}');
+
     void submit() {
       if (!form.currentState!.validate()) {
         return;
@@ -28,11 +30,13 @@ class ExpenseForm extends ConsumerWidget {
 
       ref.read(gastosProvider.notifier).setGastos(
           alquiler, depreciacion, gVentas, nomina, papeleria, servicios);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Datos actualizados correctamente')));
     }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      mainAxisSize: MainAxisSize.max,
       children: [
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
