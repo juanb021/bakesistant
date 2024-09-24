@@ -19,8 +19,6 @@ class ExpenseForm extends ConsumerWidget {
     double papeleria = 0;
     double servicios = 0;
 
-    debugPrint('alquiler: ${gastos.alquiler}');
-
     void submit() {
       if (!form.currentState!.validate()) {
         return;

@@ -28,12 +28,14 @@ class _ExpensesScreenstate extends ConsumerState<ExpensesScreen> {
         backgroundColor: Theme.of(context).colorScheme.primaryFixed,
         title: const Text('Configura tus gastos'),
       ),
-      body: FutureBuilder(
-        future: _expensesFuture,
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? const Center(child: CircularProgressIndicator())
-                : const ExpenseForm(),
+      body: SingleChildScrollView(
+        child: FutureBuilder(
+          future: _expensesFuture,
+          builder: (context, snapshot) =>
+              snapshot.connectionState == ConnectionState.waiting
+                  ? const CircularProgressIndicator()
+                  : const ExpenseForm(),
+        ),
       ),
     );
   }
