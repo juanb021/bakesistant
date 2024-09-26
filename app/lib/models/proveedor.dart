@@ -4,12 +4,12 @@ class Proveedor {
     required this.correo,
     required this.nombre,
     required this.telefono,
-    required this.zona,
+    required this.direccion,
   });
 
   final String nombre;
   final String telefono;
   final String categoria;
-  final String zona;
+  final String direccion;
   final String correo;
 }
