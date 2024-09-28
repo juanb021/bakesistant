@@ -5,6 +5,7 @@ class Proveedor {
     required this.nombre,
     required this.telefono,
     required this.direccion,
+    required this.zona,
   });
 
   final String nombre;
@@ -12,4 +13,5 @@ class Proveedor {
   final String categoria;
   final String direccion;
   final String correo;
+  final String zona;
 }

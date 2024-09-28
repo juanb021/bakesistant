@@ -1,3 +1,4 @@
+import 'package:app/screens/providers_screen.dart';
 import 'package:app/widgets/home/bot_navigation.dart';
 import 'package:flutter/material.dart';
 
@@ -21,12 +22,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildContent() {
     switch (_selectedPageIndex) {
+      // Pagina de Recetas
       case 1:
         return const Center(child: Text('Placeholder 1'));
+
+      // Pagina de Ingredientes
       case 2:
         return const Center(child: Text('Placeholder 2'));
+
+      // Pagina de Proveedores
       case 3:
-        return const Center(child: Text('Placeholder 3'));
+        return const ProvidersScreen();
+
+      // Pagina de Inicio
       default:
         return const Homestack();
     }
