@@ -3,22 +3,27 @@ import 'package:app/models/ingrediente.dart';
 class Receta {
   Receta({
     required this.nombre,
-    required this.ingredientes,
+    required this.ingredientList,
     this.costoMaterial,
   });
 
   final String nombre;
-  final List<Ingrediente> ingredientes;
+  // En este caso el double es la cantidad del ingrediente
+  final List<Map<Ingrediente, double>> ingredientList;
   double? costoMaterial;
 
-  void getCosto() {
+  double getCosto() {
     double costoTotal = 0;
 
-    for (var ingrediente in ingredientes) {
-      if (ingrediente.cantidad != null) {
-        costoTotal += ingrediente.cantidad! * ingrediente.costo;
-      }
+    for (final ingredientMap in ingredientList) {
+      final ingrediente = ingredientMap.keys.first;
+      final cantidad = ingredientMap[ingrediente] ?? 0;
+
+      costoTotal += ingrediente.costo * cantidad;
     }
+
     costoMaterial = costoTotal;
+
+    return costoMaterial!;
   }
 }

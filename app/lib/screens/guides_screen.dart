@@ -6,45 +6,54 @@ import 'package:app/data/datos_guia.dart';
 
 class GuidesScreen extends StatelessWidget {
   const GuidesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     void openGuideDetails(Guia guia) {
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).push(
+        MaterialPageRoute(
           builder: (ctx) => GuideDetails(
-                guia: guia,
-              )));
+            guia: guia,
+          ),
+        ),
+      );
     }
 
-    const List<Guia> guias = infoGuias;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primaryFixed,
           title: Text(
-            'Guias de uso',
+            'Ayuda',
             style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            for (final guia in guias)
-              InkWell(
-                onTap: () {
-                  openGuideDetails(guia);
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    '●  ${guia.titulo.toUpperCase()}  ●',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).colorScheme.primary),
-                    textAlign: TextAlign.center,
+        body: ListView.builder(
+          itemCount: infoGuias.length,
+          itemBuilder: (context, index) => InkWell(
+            onTap: () {
+              openGuideDetails(infoGuias[index]);
+            },
+            child: Card(
+              clipBehavior: Clip.hardEdge,
+              margin: const EdgeInsets.all(16),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                  Theme.of(context).colorScheme.primaryFixed,
+                  Theme.of(context).colorScheme.primaryFixedDim,
+                ])),
+                child: Text(
+                  infoGuias[index].titulo,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
-              )
-          ],
+              ),
+            ),
+          ),
         ));
   }
 }
