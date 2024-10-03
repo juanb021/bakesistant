@@ -1,6 +1,8 @@
+import 'package:app/widgets/ingredients/ingredient_info.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/widgets/ingredients/ingredient_form.dart';
+import 'package:app/data/dummy_data_ingredients.dart';
 
 class IngredientsScreen extends StatefulWidget {
   const IngredientsScreen({super.key});
@@ -49,11 +51,11 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
             ),
           ],
         ),
-        body: const Column(
-          children: [
-            SizedBox(height: 16),
-            SingleChildScrollView(),
-          ],
+        body: ListView.builder(
+          itemCount: dummyIngredients.length,
+          itemBuilder: (context, index) => IngredientInfo(
+            ingrediente: dummyIngredients[index],
+          ),
         ),
       ),
     );
