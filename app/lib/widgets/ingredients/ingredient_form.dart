@@ -2,7 +2,6 @@ import 'package:app/providers/ingredients_provider.dart';
 import 'package:app/widgets/boton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:app/models/ingrediente.dart';
 
 class IngredientForm extends ConsumerStatefulWidget {
   const IngredientForm({
@@ -31,17 +30,6 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
 
       ref.read(ingredientesProvider.notifier).addIngredient(nombre, costo);
 
-      List<Ingrediente> ingredientes = ref.watch(ingredientesProvider);
-
-      for (var ingrediente in ingredientes) {
-        debugPrint(
-            'Ingrediente: ${ingrediente.nombre}, Costo: ${ingrediente.costo}');
-      }
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Ingrediente agregado')));
-
-      // Cierra el modal automáticamente después de agregar el ingrediente
       Navigator.of(context).pop();
     }
 
