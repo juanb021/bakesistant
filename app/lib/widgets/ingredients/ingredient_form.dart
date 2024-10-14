@@ -1,18 +1,50 @@
+import 'package:app/providers/ingredients_provider.dart';
 import 'package:app/widgets/boton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:app/models/ingrediente.dart';
 
-class IngredientForm extends StatefulWidget {
-  const IngredientForm({super.key});
+class IngredientForm extends ConsumerStatefulWidget {
+  const IngredientForm({
+    super.key,
+  });
 
   @override
-  State<IngredientForm> createState() {
+  ConsumerState<IngredientForm> createState() {
     return _IngredientFormState();
   }
 }
 
-class _IngredientFormState extends State<IngredientForm> {
+class _IngredientFormState extends ConsumerState<IngredientForm> {
+  final form = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    String nombre = '';
+    double costo = 0;
+
+    void submit() {
+      if (!form.currentState!.validate()) {
+        return;
+      }
+
+      form.currentState!.save();
+
+      ref.read(ingredientesProvider.notifier).addIngredient(nombre, costo);
+
+      List<Ingrediente> ingredientes = ref.watch(ingredientesProvider);
+
+      for (var ingrediente in ingredientes) {
+        debugPrint(
+            'Ingrediente: ${ingrediente.nombre}, Costo: ${ingrediente.costo}');
+      }
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Ingrediente agregado')));
+
+      // Cierra el modal automáticamente después de agregar el ingrediente
+      Navigator.of(context).pop();
+    }
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -27,6 +59,7 @@ class _IngredientFormState extends State<IngredientForm> {
           ),
           const SizedBox(height: 16),
           Form(
+            key: form,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -48,6 +81,15 @@ class _IngredientFormState extends State<IngredientForm> {
                       ),
                     ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, ingresa un ingrediente válido';
+                    }
+                    return null; // Si no hay errores, retorna null
+                  },
+                  onSaved: (value) {
+                    nombre = value!;
+                  },
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -68,9 +110,22 @@ class _IngredientFormState extends State<IngredientForm> {
                       ),
                     ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, ingresa un valor';
+                    }
+                    final double? numericValue = double.tryParse(value);
+                    if (numericValue == null || numericValue <= 0) {
+                      return 'El costo debe ser un número mayor a 0';
+                    }
+                    return null; // Si no hay errores, retorna null
+                  },
+                  onSaved: (value) {
+                    costo = double.tryParse(value!)!;
+                  },
                 ),
                 const SizedBox(height: 30),
-                Boton(onTap: () {}, texto: 'Agregar Ingrediente')
+                Boton(onTap: submit, texto: 'Agregar Ingrediente')
               ],
             ),
           )

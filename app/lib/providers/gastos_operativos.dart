@@ -1,52 +1,29 @@
-import 'package:path/path.dart' as path;
-import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:app/database/database_helper.dart';
 import 'package:app/models/gastos_administrativos.dart';
-
-Future<Database> _getDatabase() async {
-  final dbpath = await sql.getDatabasesPath();
-  // print('Database path: $dbpath');
-  final db = await sql.openDatabase(
-    path.join(dbpath, 'bakesistant.db'),
-    onCreate: (db, version) {
-      return db.execute("""CREATE TABLE user_expenses(
-          id INTEGER PRIMARY KEY,
-          alquiler REAL,
-          depreciacion REAL,
-          gventas REAl,
-          nomina REAL,
-          papeleria REAL,
-          servicios REAL,
-          total REAL)""");
-    },
-    version: 1,
-  );
-  return db;
-}
 
 class GastosNotifier extends StateNotifier<GastosAdministrativos> {
   GastosNotifier()
-      : super(
-          GastosAdministrativos(
-            alquiler: 0,
-            depreciacion: 0,
-            gVentas: 0,
-            nomina: 0,
-            papeleria: 0,
-            servicios: 0,
-          ),
-        );
+      : super(GastosAdministrativos(
+          alquiler: 0,
+          depreciacion: 0,
+          gVentas: 0,
+          nomina: 0,
+          papeleria: 0,
+          servicios: 0,
+        )) {
+    loadExpenses();
+  }
 
   void setGastos(double alquiler, double depreciacion, double gVentas,
       double nomina, double papeleria, double servicios) async {
-    final db = await _getDatabase();
+    final db = await getDatabase();
 
-    db.insert(
+    await db.update(
       'user_expenses',
       {
-        'id': 1,
         'alquiler': alquiler,
         'depreciacion': depreciacion,
         'gventas': gVentas,
@@ -55,12 +32,15 @@ class GastosNotifier extends StateNotifier<GastosAdministrativos> {
         'servicios': servicios,
         'total': calcularTotalGastos()
       },
-      conflictAlgorithm: sql.ConflictAlgorithm.replace,
+      where: 'id = ?',
+      whereArgs: [1],
     );
+
+    loadExpenses();
   }
 
   Future<void> loadExpenses() async {
-    final db = await _getDatabase();
+    final db = await getDatabase();
     final data = await db.query('user_expenses');
     if (data.isNotEmpty) {
       final expenses = data
@@ -77,17 +57,30 @@ class GastosNotifier extends StateNotifier<GastosAdministrativos> {
           .toList();
 
       state = expenses[0];
+    } else {
+      await db.insert(
+        'user_expenses',
+        {
+          'alquiler': 0,
+          'depreciacion': 0,
+          'gventas': 0,
+          'nomina': 0,
+          'papeleria': 0,
+          'servicios': 0,
+          'total': calcularTotalGastos()
+        },
+        conflictAlgorithm: sql.ConflictAlgorithm.replace,
+      );
     }
   }
 
   double calcularTotalGastos() {
-    double total = state.alquiler +
+    return state.alquiler +
         state.depreciacion +
         state.gVentas +
         state.nomina +
         state.papeleria +
         state.servicios;
-    return total;
   }
 }
 
