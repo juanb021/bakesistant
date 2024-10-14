@@ -22,19 +22,13 @@ class _IngredientInfoState extends ConsumerState<IngredientInfo> {
       key: ValueKey(widget.ingrediente.nombre),
       onDismissed: (direction) {
         ref
-            .read(ingredientesProvider.notifier)
+            .watch(ingredientesProvider.notifier)
             .deleteIngredient(widget.ingrediente.nombre);
 
-        ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Ingrediente eliminado!',
-                ),
-              ],
+            content: Text(
+              'Ingrediente eliminado!',
             ),
           ),
         );
