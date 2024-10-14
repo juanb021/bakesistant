@@ -1,18 +1,20 @@
-import 'package:app/widgets/ingredients/ingredient_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:app/models/ingrediente.dart';
+import 'package:app/providers/ingredients_provider.dart';
+import 'package:app/widgets/ingredients/ingredient_info.dart';
 import 'package:app/widgets/ingredients/ingredient_form.dart';
-import 'package:app/data/dummy_data_ingredients.dart';
 
-class IngredientsScreen extends StatefulWidget {
+class IngredientsScreen extends ConsumerStatefulWidget {
   const IngredientsScreen({super.key});
   @override
-  State<IngredientsScreen> createState() {
+  ConsumerState<IngredientsScreen> createState() {
     return _IngredientsScreenState();
   }
 }
 
-class _IngredientsScreenState extends State<IngredientsScreen> {
+class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
   void _openAddIngredientoverlay() {
     showModalBottomSheet(
       context: context,
@@ -22,6 +24,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Ingrediente> ingredientes = ref.watch(ingredientesProvider);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -51,12 +54,18 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
             ),
           ],
         ),
-        body: ListView.builder(
-          itemCount: dummyIngredients.length,
-          itemBuilder: (context, index) => IngredientInfo(
-            ingrediente: dummyIngredients[index],
-          ),
-        ),
+        body: ingredientes.isNotEmpty
+            ? ListView.builder(
+                itemCount: ingredientes.length,
+                itemBuilder: (ctx, index) => IngredientInfo(
+                  ingrediente: ingredientes[index],
+                ),
+              )
+            : const Center(
+                child: Text(
+                  'Ningun ingrediente!',
+                ),
+              ),
       ),
     );
   }
