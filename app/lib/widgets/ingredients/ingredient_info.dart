@@ -1,5 +1,6 @@
 import 'package:app/models/ingrediente.dart';
 import 'package:app/providers/ingredients_provider.dart';
+import 'package:app/widgets/ingredients/ingredient_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,6 +17,15 @@ class IngredientInfo extends ConsumerStatefulWidget {
 }
 
 class _IngredientInfoState extends ConsumerState<IngredientInfo> {
+  void _openAddIngredientoverlay() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => IngredientForm(
+        ingrediente: widget.ingrediente,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -34,7 +44,7 @@ class _IngredientInfoState extends ConsumerState<IngredientInfo> {
         );
       },
       child: InkWell(
-        onTap: () {},
+        onTap: _openAddIngredientoverlay,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 25),
           margin: const EdgeInsets.all(5),

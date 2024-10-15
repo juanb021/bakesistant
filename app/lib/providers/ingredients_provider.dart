@@ -62,6 +62,18 @@ class IngredientesNotifier extends StateNotifier<List<Ingrediente>> {
 
     await loadIngredients();
   }
+
+  // Nuevo método para filtrar ingredientes por nombre
+  void filterIngredientsByName(String query) {
+    state = state.where((ingrediente) {
+      return ingrediente.nombre.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+  }
+
+  // Nuevo método para reiniciar el estado con todos los ingredientes
+  Future<void> resetIngredients() async {
+    await loadIngredients();
+  }
 }
 
 final ingredientesProvider =
