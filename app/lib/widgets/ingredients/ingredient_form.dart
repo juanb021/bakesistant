@@ -1,15 +1,15 @@
-import 'package:app/models/ingrediente.dart'; // Asegúrate de importar el modelo de Ingrediente
+import 'package:app/models/ingrediente.dart';
 import 'package:app/providers/ingredients_provider.dart';
 import 'package:app/widgets/boton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IngredientForm extends ConsumerStatefulWidget {
-  final Ingrediente? ingrediente; // Variable para recibir un ingrediente
+  final Ingrediente? ingrediente;
 
   const IngredientForm({
     super.key,
-    this.ingrediente, // Parámetro opcional
+    this.ingrediente,
   });
 
   @override
@@ -126,7 +126,12 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
                   },
                 ),
                 const SizedBox(height: 30),
-                Boton(onTap: submit, texto: 'Agregar Ingrediente')
+                Boton(
+                  onTap: submit,
+                  texto: nombre == ''
+                      ? 'Agregar Ingrediente'
+                      : 'Actualizar Informacion',
+                )
               ],
             ),
           )
