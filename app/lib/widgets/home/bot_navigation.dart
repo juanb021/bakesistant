@@ -35,8 +35,8 @@ class _BotNavigationState extends State<BotNavigation> {
           label: 'Ingredientes',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.store),
-          label: 'Proveedores',
+          icon: Icon(Icons.shopping_bag),
+          label: 'Empaques',
         ),
       ],
     );

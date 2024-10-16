@@ -46,6 +46,14 @@ Future<Database> getDatabase() async {
           FOREIGN KEY (ingrediente_id) REFERENCES user_ingredients(id),
           PRIMARY KEY (receta_id, ingrediente_id)
         )""");
+
+      // Create user_packages table
+      await db.execute("""
+          CREATE TABLE IF NOT EXISTS user_empaques (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT UNIQUE,
+          price REAL
+        )""");
     },
     version: 1,
   );

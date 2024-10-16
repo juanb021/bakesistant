@@ -1,5 +1,5 @@
 import 'package:app/screens/ingredients_screen.dart';
-import 'package:app/screens/providers_screen.dart';
+import 'package:app/screens/materials_screen.dart';
 import 'package:app/widgets/home/bot_navigation.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // Pagina de Proveedores
       case 3:
-        return const ProvidersScreen();
+        return const MaterialsScreen();
 
       // Pagina de Inicio
       default:
