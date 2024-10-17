@@ -1,9 +1,8 @@
-import 'package:app/screens/ingredients_screen.dart';
-import 'package:app/screens/materials_screen.dart';
-import 'package:app/widgets/home/bot_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:app/screens/materials_screen.dart';
 
 import 'package:app/widgets/home/homestack.dart';
+import 'package:app/widgets/home/bot_navigation.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,10 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // Pagina de Ingredientes
       case 2:
-        return const IngredientsScreen();
-
-      // Pagina de Proveedores
-      case 3:
         return const MaterialsScreen();
 
       // Pagina de Inicio

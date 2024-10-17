@@ -31,12 +31,8 @@ class _BotNavigationState extends State<BotNavigation> {
           label: 'Recetario',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.local_dining),
-          label: 'Ingredientes',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_bag),
-          label: 'Empaques',
+          icon: Icon(Icons.list),
+          label: 'Materiales',
         ),
       ],
     );
