@@ -1,3 +1,4 @@
+import 'package:app/screens/recetas_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/materials_screen.dart';
 
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (_selectedPageIndex) {
       // Pagina de Recetas
       case 1:
-        return const Center(child: Text('Placeholder 1'));
+        return const RecetasScreen();
 
       // Pagina de Ingredientes
       case 2:

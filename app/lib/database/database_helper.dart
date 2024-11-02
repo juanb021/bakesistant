@@ -33,7 +33,8 @@ Future<Database> getDatabase() async {
           CREATE TABLE IF NOT EXISTS recetas (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT UNIQUE,
-          costo_material REAL
+          costo_material REAL,
+          monthly_production REAL
         )""");
 
       // Create receta_ingredientes table for many-to-many relation
@@ -53,6 +54,17 @@ Future<Database> getDatabase() async {
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT UNIQUE,
           price REAL
+        )""");
+
+      // Create receta_empaques table for many-to-many relation
+      await db.execute("""
+          CREATE TABLE IF NOT EXISTS receta_empaques (
+          receta_id INTEGER,
+          empaque_id INTEGER,
+          cantidad REAL,
+          FOREIGN KEY (receta_id) REFERENCES recetas(id),
+          FOREIGN KEY (empaque_id) REFERENCES user_empaques(id),
+          PRIMARY KEY (receta_id, empaque_id)
         )""");
     },
     version: 1,
