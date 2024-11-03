@@ -1,6 +1,6 @@
-import 'package:app/models/receta.dart';
-import 'package:app/providers/recetas_provider.dart';
-import 'package:app/screens/receta_detalles.dart';
+import 'package:app/models/recipe.dart';
+import 'package:app/providers/recipes_provider.dart';
+import 'package:app/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,7 +10,7 @@ class RecetaCard extends ConsumerStatefulWidget {
     required this.receta,
   });
 
-  final Receta receta;
+  final Recipe receta;
 
   @override
   ConsumerState<RecetaCard> createState() {
@@ -21,15 +21,15 @@ class RecetaCard extends ConsumerStatefulWidget {
 class _RecetaCardState extends ConsumerState<RecetaCard> {
   void _openDetails() {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (ctx) => RecetaDetalles(receta: widget.receta)));
+        builder: (ctx) => RecipeDetailsScreen(recipe: widget.receta)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey(widget.receta.nombre),
+      key: ValueKey(widget.receta.name),
       onDismissed: (direction) {
-        ref.read(recetasProvider.notifier).deleteReceta(widget.receta.nombre);
+        ref.read(recipesProvider.notifier).deleteRecipe(widget.receta.name);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
@@ -54,7 +54,7 @@ class _RecetaCardState extends ConsumerState<RecetaCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                widget.receta.nombre,
+                widget.receta.name,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 18,

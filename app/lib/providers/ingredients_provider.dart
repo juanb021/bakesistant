@@ -1,22 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app/models/ingrediente.dart';
+import 'package:app/models/ingredient.dart';
 import 'package:app/database/database_helper.dart';
 
-class IngredientesNotifier extends StateNotifier<List<Ingrediente>> {
-  IngredientesNotifier() : super([]) {
+class IngredientsNotifier extends StateNotifier<List<Ingredient>> {
+  IngredientsNotifier() : super([]) {
     loadIngredients();
   }
 
+  // Loads ingredients from the database and updates the state
   Future<void> loadIngredients() async {
     final db = await getDatabase();
     final data = await db.query('user_ingredients');
     if (data.isNotEmpty) {
       state = data
           .map(
-            (row) => Ingrediente(
-              nombre: row['name'] as String,
-              costo: row['price'] as double,
+            (row) => Ingredient(
+              name: row['name'] as String,
+              cost: row['price'] as double,
             ),
           )
           .toList();
@@ -25,58 +26,61 @@ class IngredientesNotifier extends StateNotifier<List<Ingrediente>> {
     }
   }
 
-  Future<void> addIngredient(String nombre, double costo) async {
+  // Adds a new ingredient or updates the cost if the ingredient already exists
+  Future<void> addIngredient(String name, double cost) async {
     final db = await getDatabase();
 
     final existingIngredient = await db.query(
       'user_ingredients',
       where: 'name = ?',
-      whereArgs: [nombre],
+      whereArgs: [name],
     );
 
     if (existingIngredient.isNotEmpty) {
       await db.update(
         'user_ingredients',
-        {'price': costo},
+        {'price': cost},
         where: 'name = ?',
-        whereArgs: [nombre],
+        whereArgs: [name],
       );
     } else {
       await db.insert(
         'user_ingredients',
-        {'name': nombre, 'price': costo},
+        {'name': name, 'price': cost},
       );
     }
 
     await loadIngredients();
   }
 
-  Future<void> deleteIngredient(String nombre) async {
+  // Deletes an ingredient from the database and updates the state
+  Future<void> deleteIngredient(String name) async {
     final db = await getDatabase();
 
     await db.delete(
       'user_ingredients',
       where: 'name = ?',
-      whereArgs: [nombre],
+      whereArgs: [name],
     );
 
     await loadIngredients();
   }
 
-  // Nuevo método para filtrar ingredientes por nombre
+  // Filters ingredients by name and updates the state based on the search query
   void filterIngredientsByName(String query) {
-    state = state.where((ingrediente) {
-      return ingrediente.nombre.toLowerCase().contains(query.toLowerCase());
+    state = state.where((ingredient) {
+      return ingredient.name.toLowerCase().contains(query.toLowerCase());
     }).toList();
   }
 
-  // Nuevo método para reiniciar el estado con todos los ingredientes
+  // Resets the state by reloading all ingredients from the database
   Future<void> resetIngredients() async {
     await loadIngredients();
   }
 }
 
-final ingredientesProvider =
-    StateNotifierProvider<IngredientesNotifier, List<Ingrediente>>(
-  (ref) => IngredientesNotifier(),
+// Provides the IngredientsNotifier state
+final ingredientsProvider =
+    StateNotifierProvider<IngredientsNotifier, List<Ingredient>>(
+  (ref) => IngredientsNotifier(),
 );

@@ -1,6 +1,8 @@
+// Libraries
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Modules
 import 'package:app/screens/guides_screen.dart';
 import 'package:app/widgets/expenses_screen/expense_form.dart';
 
@@ -9,11 +11,12 @@ class ExpensesScreen extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ExpensesScreen> createState() {
-    return _ExpensesScreenstate();
+    return _ExpensesScreenState();
   }
 }
 
-class _ExpensesScreenstate extends ConsumerState<ExpensesScreen> {
+class _ExpensesScreenState extends ConsumerState<ExpensesScreen> {
+  // Opens the help screen
   void openHelp() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (ctx) => const GuidesScreen()));
@@ -36,6 +39,7 @@ class _ExpensesScreenstate extends ConsumerState<ExpensesScreen> {
           )
         ],
       ),
+      // Displays the expense form
       body: const SingleChildScrollView(child: ExpenseForm()),
     );
   }

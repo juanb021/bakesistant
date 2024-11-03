@@ -1,7 +1,9 @@
-import 'package:app/screens/recetas_screen.dart';
+// Libraries
 import 'package:flutter/material.dart';
-import 'package:app/screens/materials_screen.dart';
 
+// Modules
+import 'package:app/screens/recetas_screen.dart';
+import 'package:app/screens/materials_screen.dart';
 import 'package:app/widgets/home/homestack.dart';
 import 'package:app/widgets/home/bot_navigation.dart';
 
@@ -13,25 +15,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedPageIndex = 0;
+  int _selectedPageIndex = 0; // Track the currently selected page index
 
+  // Update the selected page index
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
   }
 
+  // Build the content based on the selected page index
   Widget _buildContent() {
     switch (_selectedPageIndex) {
-      // Pagina de Recetas
+      // Recipes page
       case 1:
         return const RecetasScreen();
 
-      // Pagina de Ingredientes
+      // Ingredients page
       case 2:
         return const MaterialsScreen();
 
-      // Pagina de Inicio
+      // Home page
       default:
         return const Homestack();
     }
@@ -41,9 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: _buildContent(),
-          bottomNavigationBar: BotNavigation(
-              selectedPage: _selectedPageIndex, onSelectPage: _selectPage)),
+        body: _buildContent(), // Display the appropriate content
+        bottomNavigationBar: BotNavigation(
+          selectedPage: _selectedPageIndex,
+          onSelectPage: _selectPage,
+        ),
+      ),
     );
   }
 }

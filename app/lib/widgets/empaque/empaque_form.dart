@@ -1,11 +1,11 @@
-import 'package:app/models/empaque.dart';
-import 'package:app/providers/empaques_provider.dart';
+import 'package:app/models/package.dart';
+import 'package:app/providers/packages_notifier.dart';
 import 'package:app/widgets/boton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EmpaqueForm extends ConsumerStatefulWidget {
-  final Empaque? empaque;
+  final Package? empaque;
 
   const EmpaqueForm({
     super.key,
@@ -26,8 +26,8 @@ class _EmpaqueFormState extends ConsumerState<EmpaqueForm> {
   @override
   void initState() {
     super.initState();
-    nombre = widget.empaque?.nombre ?? '';
-    costo = widget.empaque?.costo ?? 0;
+    nombre = widget.empaque?.name ?? '';
+    costo = widget.empaque?.cost ?? 0;
   }
 
   void submit() {
@@ -37,7 +37,7 @@ class _EmpaqueFormState extends ConsumerState<EmpaqueForm> {
 
     form.currentState!.save();
 
-    ref.read(empaquesProvider.notifier).addEmpaque(nombre, costo);
+    ref.read(packagesProvider.notifier).addPackage(nombre, costo);
 
     Navigator.of(context).pop();
   }

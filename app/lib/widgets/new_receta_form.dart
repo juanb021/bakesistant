@@ -1,15 +1,15 @@
-import 'package:app/providers/recetas_provider.dart';
+import 'package:app/providers/recipes_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app/models/receta.dart';
-import 'package:app/models/ingrediente.dart';
-import 'package:app/models/empaque.dart';
+import 'package:app/models/recipe.dart';
+import 'package:app/models/ingredient.dart';
+import 'package:app/models/package.dart';
 import 'package:app/providers/ingredients_provider.dart';
-import 'package:app/providers/empaques_provider.dart';
+import 'package:app/providers/packages_notifier.dart';
 
 class NewRecetaForm extends ConsumerStatefulWidget {
-  final Receta? receta;
+  final Recipe? receta;
 
   const NewRecetaForm({
     super.key,
@@ -25,14 +25,14 @@ class NewRecetaForm extends ConsumerStatefulWidget {
 class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
   final form = GlobalKey<FormState>();
   late String nombre;
-  late List<Map<Ingrediente, double>> ingredientList;
-  late List<Map<Empaque, double>> packageList;
+  late List<Map<Ingredient, double>> ingredientList;
+  late List<Map<Package, double>> packageList;
   late double monthlyProduction;
 
   @override
   void initState() {
     super.initState();
-    nombre = widget.receta?.nombre ?? '';
+    nombre = widget.receta?.name ?? '';
     ingredientList = widget.receta?.ingredientList ?? [];
     packageList = widget.receta?.packageList ?? [];
     monthlyProduction = widget.receta?.monthlyProduction ?? 0;
@@ -61,8 +61,8 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
     {"empaque": null, "cantidad": null}
   ];
 
-  List<Ingrediente> _getIngredientesDisponibles(
-      int index, List<Ingrediente> listaIngredientes) {
+  List<Ingredient> _getIngredientesDisponibles(
+      int index, List<Ingredient> listaIngredientes) {
     final Set<dynamic> ingredientesSeleccionados = _ingredientesConCantidad
         .asMap()
         .entries
@@ -77,8 +77,8 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
         .toList();
   }
 
-  List<Empaque> _getEmpaquesDisponibles(
-      int index, List<Empaque> listaEmpaques) {
+  List<Package> _getEmpaquesDisponibles(
+      int index, List<Package> listaEmpaques) {
     final Set<dynamic> empaquesSeleccionados = _empaquesConCantidad
         .asMap()
         .entries
@@ -101,7 +101,7 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
 
     ingredientList.clear();
     for (var ingredienteConCantidad in _ingredientesConCantidad) {
-      Ingrediente? ingrediente = ingredienteConCantidad['ingrediente'];
+      Ingredient? ingrediente = ingredienteConCantidad['ingrediente'];
       double? cantidad = ingredienteConCantidad['cantidad'];
 
       if (ingrediente != null && cantidad != null) {
@@ -111,7 +111,7 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
 
     packageList.clear();
     for (var empaqueConCantidad in _empaquesConCantidad) {
-      Empaque? empaque = empaqueConCantidad['empaque'];
+      Package? empaque = empaqueConCantidad['empaque'];
       double? cantidad = empaqueConCantidad['cantidad'];
 
       if (empaque != null && cantidad != null) {
@@ -120,15 +120,15 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
     }
 
     ref
-        .read(recetasProvider.notifier)
-        .addReceta(nombre, ingredientList, packageList, monthlyProduction);
+        .read(recipesProvider.notifier)
+        .addRecipe(nombre, ingredientList, packageList, monthlyProduction);
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Ingrediente> listaIngredientes = ref.watch(ingredientesProvider);
-    final List<Empaque> listaEmpaques = ref.watch(empaquesProvider);
+    final List<Ingredient> listaIngredientes = ref.watch(ingredientsProvider);
+    final List<Package> listaEmpaques = ref.watch(packagesProvider);
 
     return SafeArea(
       child: Scaffold(
@@ -186,7 +186,7 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
                     int index = entry.key;
                     var ingredienteConCantidad = entry.value;
 
-                    List<Ingrediente> ingredientesDisponibles =
+                    List<Ingredient> ingredientesDisponibles =
                         _getIngredientesDisponibles(index, listaIngredientes);
 
                     return Column(
@@ -195,16 +195,16 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: DropdownButtonFormField<Ingrediente>(
+                              child: DropdownButtonFormField<Ingredient>(
                                 value: ingredienteConCantidad["ingrediente"],
                                 items: ingredientesDisponibles
-                                    .map((Ingrediente ingrediente) {
-                                  return DropdownMenuItem<Ingrediente>(
+                                    .map((Ingredient ingrediente) {
+                                  return DropdownMenuItem<Ingredient>(
                                     value: ingrediente,
-                                    child: Text(ingrediente.nombre),
+                                    child: Text(ingrediente.name),
                                   );
                                 }).toList(),
-                                onChanged: (Ingrediente? newValue) {
+                                onChanged: (Ingredient? newValue) {
                                   setState(() {
                                     _ingredientesConCantidad[index]
                                         ["ingrediente"] = newValue;
@@ -283,7 +283,7 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
                     int index = entry.key;
                     var empaqueConCantidad = entry.value;
 
-                    List<Empaque> empaquesDisponibles =
+                    List<Package> empaquesDisponibles =
                         _getEmpaquesDisponibles(index, listaEmpaques);
 
                     return Column(
@@ -292,16 +292,16 @@ class _NewRecetaFormState extends ConsumerState<NewRecetaForm> {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: DropdownButtonFormField<Empaque>(
+                              child: DropdownButtonFormField<Package>(
                                 value: empaqueConCantidad["empaque"],
                                 items:
-                                    empaquesDisponibles.map((Empaque empaque) {
-                                  return DropdownMenuItem<Empaque>(
+                                    empaquesDisponibles.map((Package empaque) {
+                                  return DropdownMenuItem<Package>(
                                     value: empaque,
-                                    child: Text(empaque.nombre),
+                                    child: Text(empaque.name),
                                   );
                                 }).toList(),
-                                onChanged: (Empaque? newValue) {
+                                onChanged: (Package? newValue) {
                                   setState(() {
                                     _empaquesConCantidad[index]["empaque"] =
                                         newValue;

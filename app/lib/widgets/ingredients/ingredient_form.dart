@@ -1,11 +1,11 @@
-import 'package:app/models/ingrediente.dart';
+import 'package:app/models/ingredient.dart';
 import 'package:app/providers/ingredients_provider.dart';
 import 'package:app/widgets/boton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IngredientForm extends ConsumerStatefulWidget {
-  final Ingrediente? ingrediente;
+  final Ingredient? ingrediente;
 
   const IngredientForm({
     super.key,
@@ -26,8 +26,8 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
   @override
   void initState() {
     super.initState();
-    nombre = widget.ingrediente?.nombre ?? '';
-    costo = widget.ingrediente?.costo ?? 0;
+    nombre = widget.ingrediente?.name ?? '';
+    costo = widget.ingrediente?.cost ?? 0;
   }
 
   void submit() {
@@ -37,7 +37,7 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
 
     form.currentState!.save();
 
-    ref.read(ingredientesProvider.notifier).addIngredient(nombre, costo);
+    ref.read(ingredientsProvider.notifier).addIngredient(nombre, costo);
 
     Navigator.of(context).pop();
   }

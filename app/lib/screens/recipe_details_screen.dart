@@ -1,29 +1,29 @@
-import 'package:app/models/receta.dart';
-import 'package:app/providers/gastos_operativos.dart';
+import 'package:app/models/recipe.dart';
+import 'package:app/providers/expenses_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RecetaDetalles extends ConsumerStatefulWidget {
-  const RecetaDetalles({
+class RecipeDetailsScreen extends ConsumerStatefulWidget {
+  const RecipeDetailsScreen({
     super.key,
-    required this.receta,
+    required this.recipe,
   });
 
-  final Receta receta;
+  final Recipe recipe;
 
   @override
-  ConsumerState<RecetaDetalles> createState() {
+  ConsumerState<RecipeDetailsScreen> createState() {
     return _RecetaDetallesState();
   }
 }
 
-class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
-  int cantidad = 1;
-  int cantidadEmpaques = 1;
-  double porcentajeGanancia = 0.0;
-  double totalConGanancia = 0.0;
-  double totalCostoMateriales = 0.0;
-  double totalCostoEmpaques = 0.0;
+class _RecetaDetallesState extends ConsumerState<RecipeDetailsScreen> {
+  int quantity = 1;
+  int packagequantity = 1;
+  double proffitMargin = 0.0;
+  double totalWithEarnings = 0.0;
+  double materialsCost = 0.0;
+  double packagingCost = 0.0;
 
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _packagingController = TextEditingController();
@@ -31,63 +31,61 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
 
   void _onQuantityChange(int input) {
     setState(() {
-      cantidad = input > 0 ? input : 1;
+      quantity = input > 0 ? input : 1;
 
       // Calcula el costo total de materiales
-      totalCostoMateriales =
-          widget.receta.ingredientList.fold(0.0, (sum, ingredienteMap) {
-        final ingrediente = ingredienteMap.keys.first;
-        final cantidadIngrediente = ingredienteMap.values.first;
-        final costoIngrediente = ingrediente.costo / 1000;
+      materialsCost =
+          widget.recipe.ingredientList.fold(0.0, (sum, ingredienteMap) {
+        final ingredient = ingredienteMap.keys.first;
+        final ingredientQuantity = ingredienteMap.values.first;
+        final ingredientCost = ingredient.cost / 1000;
 
-        // Calcula el costo total del ingrediente considerando la cantidad
-        return sum + (costoIngrediente * cantidadIngrediente * cantidad);
+        // Calcula el costo total del ingredient considerando la quantity
+        return sum + (ingredientCost * ingredientQuantity * quantity);
       });
     });
   }
 
   void _onPackageChange(int input) {
     setState(() {
-      cantidadEmpaques = input > 0 ? input : 1;
+      packagequantity = input > 0 ? input : 1;
 
       // Calcula el costo total de empaques
-      totalCostoEmpaques =
-          widget.receta.packageList.fold(0.0, (sum, empaqueMap) {
-        final empaque = empaqueMap.keys.first;
-        final cantidadEmpaque = empaqueMap.values.first;
-        final costoEmpaque = empaque.costo;
+      packagingCost = widget.recipe.packageList.fold(0.0, (sum, empaqueMap) {
+        final packaging = empaqueMap.keys.first;
+        final packagingQuantity = empaqueMap.values.first;
+        final packagingCost = packaging.cost;
 
-        // Calcula el costo total del empaque considerando la cantidad de empaques
-        return sum + (costoEmpaque * cantidadEmpaque * cantidadEmpaques);
+        // Calcula el costo total del packaging considerando la quantity de empaques
+        return sum + (packagingCost * packagingQuantity * packagequantity);
       });
     });
   }
 
-  void _onPercentChanged(double porcentaje) {
+  void _onPercentChanged(double percent) {
     setState(() {
-      porcentajeGanancia = porcentaje;
+      proffitMargin = percent;
     });
   }
 
-  double _calcularCostoTotal(
-      double gastosOperativos, double monthlyProduction) {
-    double costoFijoPorUnidad = gastosOperativos / monthlyProduction;
-    return totalCostoMateriales + totalCostoEmpaques + costoFijoPorUnidad;
+  double _calcularCostoTotal(double expenses, double monthlyProduction) {
+    double staticCost = expenses / monthlyProduction;
+    return materialsCost + packagingCost + staticCost;
   }
 
   @override
   Widget build(BuildContext context) {
-    final double gastosOperativos =
-        ref.read(gastosProvider.notifier).calcularTotalGastos();
-    final Receta receta = widget.receta;
-    final String costoTotal =
-        _calcularCostoTotal(gastosOperativos, receta.monthlyProduction)
+    final double expenses =
+        ref.read(expensesProvider.notifier).calculateTotalExpenses();
+    final Recipe recipe = widget.recipe;
+    final String totalCost =
+        _calcularCostoTotal(expenses, recipe.monthlyProduction)
             .toStringAsFixed(2);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryFixed,
         title: Text(
-          receta.nombre,
+          recipe.name,
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
           ),
@@ -95,7 +93,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
         actions: [
           IconButton(
             onPressed: () {
-              // Navega a NewRecetaForm para editar la receta
+              // Navega a NewRecetaForm para editar la recipe
             },
             icon: const Icon(
               Icons.edit_note,
@@ -206,7 +204,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                 ],
               ),
             ),
-            for (final ingredienteMap in receta.ingredientList)
+            for (final ingredienteMap in recipe.ingredientList)
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
@@ -216,7 +214,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        ingredienteMap.keys.first.nombre,
+                        ingredienteMap.keys.first.name,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
@@ -226,7 +224,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                     SizedBox(
                       width: 100,
                       child: Text(
-                        (ingredienteMap.values.first * cantidad)
+                        (ingredienteMap.values.first * quantity)
                             .toStringAsFixed(0),
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -238,8 +236,8 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                     Expanded(
                       flex: 1,
                       child: Text(
-                        ((ingredienteMap.keys.first.costo / 1000) *
-                                (ingredienteMap.values.first * cantidad))
+                        ((ingredienteMap.keys.first.cost / 1000) *
+                                (ingredienteMap.values.first * quantity))
                             .toStringAsFixed(3),
                         textAlign: TextAlign.end,
                         style: TextStyle(
@@ -270,7 +268,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      totalCostoMateriales.toStringAsFixed(3),
+                      materialsCost.toStringAsFixed(3),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -327,7 +325,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
               ),
             ),
 
-            for (final empaqueMap in receta.packageList)
+            for (final empaqueMap in recipe.packageList)
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
@@ -337,7 +335,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        empaqueMap.keys.first.nombre,
+                        empaqueMap.keys.first.name,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
@@ -347,7 +345,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                     SizedBox(
                       width: 100,
                       child: Text(
-                        (empaqueMap.values.first * cantidadEmpaques)
+                        (empaqueMap.values.first * packagequantity)
                             .toStringAsFixed(0),
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -359,7 +357,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                     Expanded(
                       flex: 1,
                       child: Text(
-                        (empaqueMap.keys.first.costo * cantidadEmpaques)
+                        (empaqueMap.keys.first.cost * packagequantity)
                             .toStringAsFixed(3),
                         textAlign: TextAlign.end,
                         style: TextStyle(
@@ -390,8 +388,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      (gastosOperativos / receta.monthlyProduction)
-                          .toStringAsFixed(2),
+                      (expenses / recipe.monthlyProduction).toStringAsFixed(2),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -422,7 +419,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      costoTotal.toString(),
+                      totalCost.toString(),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -457,7 +454,7 @@ class _RecetaDetallesState extends ConsumerState<RecetaDetalles> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Precio de venta: \$${(double.parse(costoTotal) * (1 + porcentajeGanancia / 100)).toStringAsFixed(2)}',
+                'Precio de venta: \$${(double.parse(totalCost) * (1 + proffitMargin / 100)).toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,

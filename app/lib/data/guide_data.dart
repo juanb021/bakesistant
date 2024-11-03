@@ -1,7 +1,9 @@
-import 'package:app/models/guia.dart';
+// Imports the Guide model to define the structure of each guide entry
+import 'package:app/models/guide.dart';
 
-const List<Guia> infoGuias = [
-  Guia(titulo: 'Alquiler', contenido: """
+// A constant list of Guide objects containing detailed information about various business expenses
+const List<Guide> infoGuias = [
+  Guide(titulo: 'Alquiler', contenido: """
 El alquiler es uno de los gastos más significativos y recurrentes en cualquier emprendimiento. Este gasto se refiere al pago periódico que se realiza por el uso de un espacio físico, ya sea una cocina, un aula, oficinas administrativas, o cualquier otra instalación necesaria para el funcionamiento del proyecto.
 
 ¿Por qué es importante agregar el alquiler a la lista de costos?
@@ -18,7 +20,7 @@ El alquiler es uno de los gastos más significativos y recurrentes en cualquier 
 
 Incluir el alquiler en la lista de costos no solo ayuda a mantener las finanzas en orden, sino que también proporciona una base sólida para la planificación y el crecimiento del emprendimiento.
 """),
-  Guia(titulo: 'Nomina', contenido: """
+  Guide(titulo: 'Nomina', contenido: """
 La nómina es un documento que detalla los pagos y deducciones que los empleados reciben en un periodo específico. Este documento no solo incluye el salario básico, sino también beneficios, impuestos y otras deducciones legales.
 
 ¿Por qué es importante agregar la nómina a la lista de costos?
@@ -34,7 +36,7 @@ La nómina es un documento que detalla los pagos y deducciones que los empleados
 5. Salario propio: Aunque el proyecto sea propio y el único empleado sea el dueño, es crucial asignarse un salario. Esto ayuda a mantener una separación clara entre las finanzas personales y las del negocio, y asegura que se consideren todos los costos operativos reales. Además, facilita la transición a un modelo con empleados adicionales en el futuro.
 Incluir la nómina en la lista de costos no solo ayuda a mantener las finanzas en orden, sino que también proporciona una base sólida para la planificación y el crecimiento del emprendimiento.
 """),
-  Guia(titulo: 'Servicios', contenido: """
+  Guide(titulo: 'Servicios', contenido: """
 Los servicios básicos como electricidad, agua, internet y telefonía son esenciales para el funcionamiento de cualquier negocio. Estos gastos operativos suelen ser recurrentes y pueden variar en función del tamaño y las necesidades del proyecto.
 
 ¿Por qué es importante agregar los servicios a la lista de costos?
@@ -50,7 +52,7 @@ Los servicios básicos como electricidad, agua, internet y telefonía son esenci
 5. Planificación futura: A medida que el negocio crezca, es probable que los costos de servicios aumenten. Tener un registro histórico de estos gastos facilita la planificación y permite anticipar posibles incrementos en el presupuesto.
 Incluir los servicios en la lista de costos no solo ayuda a mantener las finanzas en orden, sino que también garantiza que el negocio sea sostenible y eficiente a largo plazo.
 """),
-  Guia(titulo: 'Papelería', contenido: """
+  Guide(titulo: 'Papelería', contenido: """
 La papelería incluye todos los suministros de oficina necesarios para la operación diaria, como papel, bolígrafos, sobres, y otros materiales de escritura y impresión. Aunque estos costos pueden parecer menores, son recurrentes y deben ser considerados en el presupuesto.
 
 ¿Por qué es importante agregar la papelería a la lista de costos?
@@ -66,7 +68,7 @@ La papelería incluye todos los suministros de oficina necesarios para la operac
 5. Planificación futura: A medida que el negocio crece, también lo hacen las necesidades de papelería. Planificar estos gastos con antelación permite gestionar mejor los recursos y evitar interrupciones en la operación.
 Incluir la papelería en la lista de costos asegura que todos los aspectos operativos estén cubiertos y que el negocio funcione sin contratiempos.
 """),
-  Guia(titulo: 'Impuestos', contenido: """
+  Guide(titulo: 'Impuestos', contenido: """
 Los impuestos son obligaciones financieras que toda empresa debe cumplir. Estos pueden incluir impuestos sobre la renta, IVA, contribuciones a la seguridad social, entre otros.
 
 ¿Por qué es importante agregar los impuestos a la lista de costos?
@@ -82,7 +84,7 @@ Los impuestos son obligaciones financieras que toda empresa debe cumplir. Estos 
 5. Planificación futura: Los impuestos pueden variar según las leyes y el crecimiento del negocio. Planificar los pagos de impuestos con antelación asegura que la empresa cumpla con sus obligaciones sin afectar su flujo de caja.
 Incluir los impuestos en la lista de costos garantiza que la empresa esté preparada para cumplir con todas sus responsabilidades legales sin poner en riesgo su estabilidad financiera.
 """),
-  Guia(titulo: 'Depreciación', contenido: """
+  Guide(titulo: 'Depreciación', contenido: """
 La depreciación es un concepto contable que refleja la pérdida de valor de los activos a lo largo del tiempo debido al uso, desgaste o envejecimiento. Es importante considerar la depreciación al calcular los costos totales de operación.
 
 ¿Por qué es importante agregar la depreciación a la lista de costos?
@@ -98,7 +100,7 @@ La depreciación es un concepto contable que refleja la pérdida de valor de los
 5. Planificación futura: La depreciación debe ser considerada al planificar el reemplazo de activos a largo plazo, lo que ayuda a evitar interrupciones en la operación y a mantener el negocio competitivo.
 Incluir la depreciación en la lista de costos asegura que el valor de los activos se refleje adecuadamente en los estados financieros, proporcionando una base sólida para la planificación y el crecimiento del negocio.
 """),
-  Guia(titulo: 'Gastos de ventas', contenido: """
+  Guide(titulo: 'Gastos de ventas', contenido: """
 Los gastos de ventas son todos aquellos costos asociados con la promoción y venta de los productos o servicios de la empresa. Esto incluye publicidad, comisiones, descuentos, y otros gastos relacionados.
 
 ¿Por qué es importante agregar los gastos de ventas a la lista de costos?

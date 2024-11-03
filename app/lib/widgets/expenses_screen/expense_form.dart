@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:app/widgets/boton.dart';
 import 'package:app/database/database_helper.dart';
-import 'package:app/providers/gastos_operativos.dart';
-import 'package:app/models/gastos_administrativos.dart';
+import 'package:app/providers/expenses_notifier.dart';
+import 'package:app/models/administrative_expenses.dart';
 
 class ExpenseForm extends ConsumerWidget {
   const ExpenseForm({super.key});
@@ -12,7 +12,7 @@ class ExpenseForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final form = GlobalKey<FormState>();
-    GastosAdministrativos gastos = ref.watch(gastosProvider);
+    AdministrativeExpenses gastos = ref.watch(expensesProvider);
     double alquiler = 0;
     double depreciacion = 0;
     double gVentas = 0;
@@ -27,7 +27,7 @@ class ExpenseForm extends ConsumerWidget {
 
       form.currentState!.save();
 
-      ref.read(gastosProvider.notifier).setGastos(
+      ref.read(expensesProvider.notifier).setExpenses(
           alquiler, depreciacion, gVentas, nomina, papeleria, servicios);
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -45,7 +45,7 @@ class ExpenseForm extends ConsumerWidget {
             child: Column(
               children: [
                 TextFormField(
-                  initialValue: gastos.alquiler.toString(),
+                  initialValue: gastos.rent.toString(),
                   decoration: InputDecoration(
                     labelText: 'Alquiler',
                     labelStyle: TextStyle(
@@ -87,7 +87,7 @@ class ExpenseForm extends ConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  initialValue: gastos.depreciacion.toString(),
+                  initialValue: gastos.depreciation.toString(),
                   decoration: InputDecoration(
                     labelText: 'Depreciacion',
                     labelStyle: TextStyle(
@@ -129,7 +129,7 @@ class ExpenseForm extends ConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  initialValue: gastos.gVentas.toString(),
+                  initialValue: gastos.salesExpense.toString(),
                   decoration: InputDecoration(
                     labelText: 'Gastos de ventas',
                     labelStyle: TextStyle(
@@ -171,7 +171,7 @@ class ExpenseForm extends ConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  initialValue: gastos.nomina.toString(),
+                  initialValue: gastos.payroll.toString(),
                   decoration: InputDecoration(
                     labelText: 'Nomina',
                     labelStyle: TextStyle(
@@ -213,7 +213,7 @@ class ExpenseForm extends ConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  initialValue: gastos.papeleria.toString(),
+                  initialValue: gastos.stationery.toString(),
                   decoration: InputDecoration(
                     labelText: 'Papeleria',
                     labelStyle: TextStyle(
@@ -255,7 +255,7 @@ class ExpenseForm extends ConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  initialValue: gastos.servicios.toString(),
+                  initialValue: gastos.utilities.toString(),
                   decoration: InputDecoration(
                     labelText: 'Servicios',
                     labelStyle: TextStyle(

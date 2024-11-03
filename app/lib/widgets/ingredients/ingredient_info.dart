@@ -1,4 +1,4 @@
-import 'package:app/models/ingrediente.dart';
+import 'package:app/models/ingredient.dart';
 import 'package:app/providers/ingredients_provider.dart';
 import 'package:app/widgets/ingredients/ingredient_form.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class IngredientInfo extends ConsumerStatefulWidget {
     required this.ingrediente,
   });
 
-  final Ingrediente ingrediente;
+  final Ingredient ingrediente;
 
   @override
   ConsumerState<IngredientInfo> createState() => _IngredientInfoState();
@@ -29,11 +29,11 @@ class _IngredientInfoState extends ConsumerState<IngredientInfo> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey(widget.ingrediente.nombre),
+      key: ValueKey(widget.ingrediente.name),
       onDismissed: (direction) {
         ref
-            .watch(ingredientesProvider.notifier)
-            .deleteIngredient(widget.ingrediente.nombre);
+            .watch(ingredientsProvider.notifier)
+            .deleteIngredient(widget.ingrediente.name);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -59,7 +59,7 @@ class _IngredientInfoState extends ConsumerState<IngredientInfo> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                widget.ingrediente.nombre,
+                widget.ingrediente.name,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 18,
@@ -69,7 +69,7 @@ class _IngredientInfoState extends ConsumerState<IngredientInfo> {
                 width: 100,
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  '\$ ${widget.ingrediente.costo.toString()}',
+                  '\$ ${widget.ingrediente.cost.toString()}',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: 18,

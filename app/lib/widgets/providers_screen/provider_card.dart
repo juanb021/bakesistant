@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app/models/proveedor.dart';
+import 'package:app/models/supplier.dart';
 
 class ProviderCard extends StatefulWidget {
   const ProviderCard({
@@ -7,7 +7,7 @@ class ProviderCard extends StatefulWidget {
     required this.proveedor,
   });
 
-  final Proveedor proveedor;
+  final Supplier proveedor;
 
   @override
   State<ProviderCard> createState() {
@@ -49,7 +49,7 @@ class _ProviderCardState extends State<ProviderCard>
             Row(
               children: [
                 Text(
-                  proveedor.nombre,
+                  proveedor.name,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: 18,
@@ -72,7 +72,7 @@ class _ProviderCardState extends State<ProviderCard>
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  proveedor.categoria,
+                  proveedor.category,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: 16,
@@ -82,7 +82,7 @@ class _ProviderCardState extends State<ProviderCard>
                 TextButton.icon(
                   onPressed: () {},
                   label: Text(
-                    proveedor.zona,
+                    proveedor.zone,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontSize: 16,
@@ -104,7 +104,7 @@ class _ProviderCardState extends State<ProviderCard>
                         TextButton.icon(
                           onPressed: () {},
                           label: Text(
-                            proveedor.telefono,
+                            proveedor.phone,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 16,
@@ -116,7 +116,7 @@ class _ProviderCardState extends State<ProviderCard>
                         TextButton.icon(
                           onPressed: () {},
                           label: Text(
-                            proveedor.correo,
+                            proveedor.email,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 16,
@@ -128,7 +128,7 @@ class _ProviderCardState extends State<ProviderCard>
                         TextButton.icon(
                           onPressed: () {},
                           label: Text(
-                            proveedor.direccion,
+                            proveedor.address,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 16,

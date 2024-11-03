@@ -1,17 +1,24 @@
-import 'package:app/screens/home_screen.dart';
+// Libraries
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-ThemeData tema = ThemeData(
+// Modules
+import 'package:app/screens/home_screen.dart';
+
+// Defines the main theme of the application, using a color scheme generated from a seed color
+ThemeData theme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
-    seedColor: const Color.fromARGB(255, 63, 224, 208),
+    seedColor: const Color.fromARGB(
+        255, 63, 224, 208), // Adjust this color to change the theme
   ),
 );
 
 void main() {
   runApp(
     const ProviderScope(
-      child: Bakesistant(),
+      child:
+          // Initializes the app within ProviderScope for Riverpod
+          Bakesistant(),
     ),
   );
 }
@@ -23,7 +30,7 @@ class Bakesistant extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bakesistant',
-      theme: tema,
+      theme: theme,
       home: const HomeScreen(),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app/models/ingrediente.dart';
+import 'package:app/models/ingredient.dart';
 import 'package:app/providers/ingredients_provider.dart';
 import 'package:app/widgets/ingredients/ingredient_info.dart';
 
@@ -19,9 +19,9 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
 
   void _onSearchChanged(String query) {
     if (query.isNotEmpty) {
-      ref.read(ingredientesProvider.notifier).filterIngredientsByName(query);
+      ref.read(ingredientsProvider.notifier).filterIngredientsByName(query);
     } else {
-      ref.read(ingredientesProvider.notifier).resetIngredients();
+      ref.read(ingredientsProvider.notifier).resetIngredients();
     }
   }
 
@@ -33,7 +33,7 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Ingrediente> ingredientes = ref.watch(ingredientesProvider);
+    final List<Ingredient> ingredientes = ref.watch(ingredientsProvider);
 
     return SafeArea(
       child: Column(

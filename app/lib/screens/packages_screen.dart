@@ -1,8 +1,10 @@
+// Libraries
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app/models/empaque.dart';
-import 'package:app/providers/empaques_provider.dart';
+// Modules
+import 'package:app/models/package.dart';
+import 'package:app/providers/packages_notifier.dart';
 import 'package:app/widgets/empaque/empaque_info.dart';
 
 class EmpaquesScreen extends ConsumerStatefulWidget {
@@ -17,23 +19,25 @@ class EmpaquesScreen extends ConsumerStatefulWidget {
 class _EmpaquesScreenState extends ConsumerState<EmpaquesScreen> {
   final TextEditingController _searchController = TextEditingController();
 
+  // Handle search input changes to filter packages
   void _onSearchChanged(String query) {
     if (query.isNotEmpty) {
-      ref.read(empaquesProvider.notifier).filterEmpaquesByName(query);
+      ref.read(packagesProvider.notifier).filterPackagesByName(query);
     } else {
-      ref.read(empaquesProvider.notifier).resetEmpaques();
+      ref.read(packagesProvider.notifier).resetPackages();
     }
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    _searchController.dispose(); // Dispose of the search controller
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Empaque> empaques = ref.watch(empaquesProvider);
+    final List<Package> empaques =
+        ref.watch(packagesProvider); // Watch the packages provider
 
     return Column(
       children: [
@@ -48,7 +52,8 @@ class _EmpaquesScreenState extends ConsumerState<EmpaquesScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onChanged: _onSearchChanged,
+            onChanged:
+                _onSearchChanged, // Call onSearchChanged when input changes
           ),
         ),
         empaques.isNotEmpty
@@ -92,7 +97,8 @@ class _EmpaquesScreenState extends ConsumerState<EmpaquesScreen> {
                 ),
               )
             : const Center(
-                child: Text('Ningún empaque!'),
+                child: Text(
+                    'Ningún empaque!'), // Message when no packages are available
               ),
       ],
     );

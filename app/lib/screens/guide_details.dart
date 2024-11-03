@@ -1,26 +1,28 @@
-import 'package:app/models/guia.dart';
+// Libraries
 import 'package:flutter/material.dart';
+
+// Modules
+import 'package:app/models/guide.dart';
 
 class GuideDetails extends StatelessWidget {
   const GuideDetails({
     super.key,
-    required this.guia,
+    required this.guide,
   });
 
-  final Guia guia;
-
+  final Guide guide;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(guia.titulo),
+        title: Text(guide.titulo),
         backgroundColor: Theme.of(context).colorScheme.primaryFixed,
       ),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.all(10),
           child: Text(
-            guia.contenido,
+            guide.contenido,
             textAlign: TextAlign.justify,
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,

@@ -1,5 +1,5 @@
-import 'package:app/models/empaque.dart';
-import 'package:app/providers/empaques_provider.dart';
+import 'package:app/models/package.dart';
+import 'package:app/providers/packages_notifier.dart';
 import 'package:app/widgets/empaque/empaque_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +10,7 @@ class EmpaqueInfo extends ConsumerStatefulWidget {
     required this.empaque,
   });
 
-  final Empaque empaque;
+  final Package empaque;
 
   @override
   ConsumerState<EmpaqueInfo> createState() => _EmpaqueInfoState();
@@ -29,11 +29,9 @@ class _EmpaqueInfoState extends ConsumerState<EmpaqueInfo> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey(widget.empaque.nombre),
+      key: ValueKey(widget.empaque.name),
       onDismissed: (direction) {
-        ref
-            .watch(empaquesProvider.notifier)
-            .deleteEmpaque(widget.empaque.nombre);
+        ref.watch(packagesProvider.notifier).deletePackage(widget.empaque.name);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -59,7 +57,7 @@ class _EmpaqueInfoState extends ConsumerState<EmpaqueInfo> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                widget.empaque.nombre,
+                widget.empaque.name,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 18,
@@ -69,7 +67,7 @@ class _EmpaqueInfoState extends ConsumerState<EmpaqueInfo> {
                 width: 100,
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  '\$ ${widget.empaque.costo.toString()}',
+                  '\$ ${widget.empaque.cost.toString()}',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: 18,

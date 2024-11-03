@@ -1,10 +1,10 @@
 import 'package:app/widgets/providers_screen/provider_card.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/models/proveedor.dart';
-import 'package:app/data/datos_proveedores.dart';
+import 'package:app/models/supplier.dart';
+import 'package:app/data/supplier_data.dart';
 
-const List<Proveedor> proveedores = proveedoresDisponibles;
+const List<Supplier> proveedores = avaiableSuppliers;
 
 class ProvidersScreen extends StatelessWidget {
   const ProvidersScreen({super.key});

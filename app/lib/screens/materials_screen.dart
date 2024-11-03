@@ -1,7 +1,9 @@
+// Libraries
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app/screens/empaques_screen.dart';
+// Modules
+import 'package:app/screens/packages_screen.dart';
 import 'package:app/screens/ingredients_screen.dart';
 import 'package:app/widgets/empaque/empaque_form.dart';
 import 'package:app/widgets/ingredients/ingredient_form.dart';
@@ -16,15 +18,17 @@ class MaterialsScreen extends ConsumerStatefulWidget {
 }
 
 class _MaterialsScreenState extends ConsumerState<MaterialsScreen> {
-  bool _isIngredients = true;
+  bool _isIngredients = true; // Track if ingredients are displayed
   final TextEditingController _searchController = TextEditingController();
 
+  // Swap between ingredients and packages screens
   void _swapScreens() {
     setState(() {
       _isIngredients = !_isIngredients;
     });
   }
 
+  // Open the overlay to add an ingredient or package
   void _openAddItemOverlay() {
     showModalBottomSheet(
       context: context,

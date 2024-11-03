@@ -1,5 +1,5 @@
-import 'package:app/models/receta.dart';
-import 'package:app/providers/recetas_provider.dart';
+import 'package:app/models/recipe.dart';
+import 'package:app/providers/recipes_provider.dart';
 import 'package:app/widgets/new_receta_form.dart';
 import 'package:app/widgets/recipes/receta_card.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +19,9 @@ class _RecetasScreenState extends ConsumerState<RecetasScreen> {
 
   void _onSearchChanged(String query) {
     if (query.isNotEmpty) {
-      ref.read(recetasProvider.notifier).filterRecetasByName(query);
+      ref.read(recipesProvider.notifier).filterRecipesByName(query);
     } else {
-      ref.read(recetasProvider.notifier).resetRecetas();
+      ref.read(recipesProvider.notifier).resetRecipes();
     }
   }
 
@@ -41,7 +41,7 @@ class _RecetasScreenState extends ConsumerState<RecetasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Receta> recetas = ref.watch(recetasProvider);
+    final List<Recipe> recetas = ref.watch(recipesProvider);
 
     return SafeArea(
       child: Scaffold(
