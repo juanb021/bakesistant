@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:app/models/package.dart';
 import 'package:app/database/database_helper.dart';
 
@@ -8,7 +7,7 @@ class PackagesNotifier extends StateNotifier<List<Package>> {
     loadPackages();
   }
 
-  // Loads packages from the database and updates the state
+  // Carga los empaques desde la base de datos y actualiza el estado
   Future<void> loadPackages() async {
     final db = await getDatabase();
     final data = await db.query('user_empaques');
@@ -26,7 +25,7 @@ class PackagesNotifier extends StateNotifier<List<Package>> {
     }
   }
 
-  // Adds or updates a package in the database, then reloads all packages
+  // Agrega o actualiza un empaque en la base de datos y recarga la lista de empaques
   Future<void> addPackage(String name, double cost) async {
     final db = await getDatabase();
 
@@ -53,7 +52,40 @@ class PackagesNotifier extends StateNotifier<List<Package>> {
     await loadPackages();
   }
 
-  // Deletes a package from the database by name, then reloads all packages
+  // Actualiza el nombre y el costo de un empaque en la base de datos y el estado
+  Future<void> updatePackage(
+      String oldName, String newName, double newCost) async {
+    final db = await getDatabase();
+
+    final packageToUpdate = await db.query(
+      'user_empaques',
+      where: 'name = ?',
+      whereArgs: [oldName],
+    );
+
+    if (packageToUpdate.isNotEmpty) {
+      await db.update(
+        'user_empaques',
+        {
+          'name': newName, // Actualiza el nombre
+          'price': newCost // Actualiza el costo
+        },
+        where: 'name = ?',
+        whereArgs: [oldName],
+      );
+
+      // Actualiza la lista en memoria de empaques para reflejar los cambios
+      state = [
+        for (final package in state)
+          if (package.name == oldName)
+            Package(name: newName, cost: newCost)
+          else
+            package,
+      ];
+    }
+  }
+
+  // Elimina un empaque de la base de datos y actualiza el estado
   Future<void> deletePackage(String name) async {
     final db = await getDatabase();
 
@@ -66,20 +98,20 @@ class PackagesNotifier extends StateNotifier<List<Package>> {
     await loadPackages();
   }
 
-  // Filters the list of packages by name, updating the state
+  // Filtra los empaques por nombre y actualiza el estado según la consulta de búsqueda
   void filterPackagesByName(String query) {
     state = state.where((package) {
       return package.name.toLowerCase().contains(query.toLowerCase());
     }).toList();
   }
 
-  // Resets the package list by reloading all packages from the database
+  // Restablece la lista de empaques recargando todos los empaques desde la base de datos
   Future<void> resetPackages() async {
     await loadPackages();
   }
 }
 
-// Provides an instance of PackagesNotifier as a Riverpod provider
+// Proveedor de Riverpod para PackagesNotifier
 final packagesProvider = StateNotifierProvider<PackagesNotifier, List<Package>>(
   (ref) => PackagesNotifier(),
 );

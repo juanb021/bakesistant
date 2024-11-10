@@ -28,12 +28,12 @@ class ExpensesNotifier extends StateNotifier<AdministrativeExpenses> {
     await db.update(
       'user_expenses',
       {
-        'rent': rent,
-        'depreciation': depreciation,
-        'sales_expense': salesExpense,
-        'payroll': payroll,
-        'stationery': stationery,
-        'utilities': utilities,
+        'alquiler': rent,
+        'depreciacion': depreciation,
+        'gventas': salesExpense,
+        'nomina': payroll,
+        'papeleria': stationery,
+        'servicios': utilities,
         'total': calculateTotalExpenses()
       },
       where: 'id = ?',
@@ -43,7 +43,6 @@ class ExpensesNotifier extends StateNotifier<AdministrativeExpenses> {
     loadExpenses();
   }
 
-  // Method to load expenses from the database or initialize defaults if empty
   Future<void> loadExpenses() async {
     final db = await getDatabase();
     final data = await db.query('user_expenses');
@@ -51,12 +50,12 @@ class ExpensesNotifier extends StateNotifier<AdministrativeExpenses> {
       final expenses = data
           .map(
             (row) => AdministrativeExpenses(
-                rent: row['rent'] as double,
-                depreciation: row['depreciation'] as double,
-                salesExpense: row['sales_expense'] as double,
-                payroll: row['payroll'] as double,
-                stationery: row['stationery'] as double,
-                utilities: row['utilities'] as double,
+                rent: row['alquiler'] as double,
+                depreciation: row['depreciacion'] as double,
+                salesExpense: row['gventas'] as double,
+                payroll: row['nomina'] as double,
+                stationery: row['papeleria'] as double,
+                utilities: row['servicios'] as double,
                 total: row['total'] as double),
           )
           .toList();
@@ -66,12 +65,12 @@ class ExpensesNotifier extends StateNotifier<AdministrativeExpenses> {
       await db.insert(
         'user_expenses',
         {
-          'rent': 0,
-          'depreciation': 0,
-          'sales_expense': 0,
-          'payroll': 0,
-          'stationery': 0,
-          'utilities': 0,
+          'alquiler': 0,
+          'depreciacion': 0,
+          'gventas': 0,
+          'nomina': 0,
+          'papeleria': 0,
+          'servicios': 0,
           'total': calculateTotalExpenses()
         },
         conflictAlgorithm: sql.ConflictAlgorithm.replace,

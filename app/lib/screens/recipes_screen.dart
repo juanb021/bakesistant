@@ -1,12 +1,12 @@
 import 'package:app/models/recipe.dart';
 import 'package:app/providers/recipes_provider.dart';
-import 'package:app/widgets/new_receta_form.dart';
-import 'package:app/widgets/recipes/receta_card.dart';
+import 'package:app/widgets/recipes/new_recipe_form.dart';
+import 'package:app/widgets/recipes/recipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RecetasScreen extends ConsumerStatefulWidget {
-  const RecetasScreen({super.key});
+class RecipesScreen extends ConsumerStatefulWidget {
+  const RecipesScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -14,7 +14,7 @@ class RecetasScreen extends ConsumerStatefulWidget {
   }
 }
 
-class _RecetasScreenState extends ConsumerState<RecetasScreen> {
+class _RecetasScreenState extends ConsumerState<RecipesScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   void _onSearchChanged(String query) {
@@ -35,7 +35,7 @@ class _RecetasScreenState extends ConsumerState<RecetasScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (ctx) => const NewRecetaForm(),
+      builder: (ctx) => const NewRecipeForm(),
     );
   }
 

@@ -2,13 +2,15 @@
 import 'package:flutter/material.dart';
 
 // Modules
-import 'package:app/screens/recetas_screen.dart';
+import 'package:app/screens/recipes_screen.dart';
 import 'package:app/screens/materials_screen.dart';
 import 'package:app/widgets/home/homestack.dart';
 import 'package:app/widgets/home/bot_navigation.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -29,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (_selectedPageIndex) {
       // Recipes page
       case 1:
-        return const RecetasScreen();
+        return const RecipesScreen();
 
       // Ingredients page
       case 2:

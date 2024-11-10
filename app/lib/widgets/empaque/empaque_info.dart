@@ -1,5 +1,5 @@
 import 'package:app/models/package.dart';
-import 'package:app/providers/packages_notifier.dart';
+import 'package:app/providers/packages_provider.dart';
 import 'package:app/widgets/empaque/empaque_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

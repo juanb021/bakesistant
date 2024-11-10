@@ -37,7 +37,14 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
 
     form.currentState!.save();
 
-    ref.read(ingredientsProvider.notifier).addIngredient(nombre, costo);
+    // Si el ingrediente existe, actualiza; si no, crea uno nuevo
+    if (widget.ingrediente != null) {
+      ref
+          .read(ingredientsProvider.notifier)
+          .updateIngredient(widget.ingrediente!.name, nombre, costo);
+    } else {
+      ref.read(ingredientsProvider.notifier).addIngredient(nombre, costo);
+    }
 
     Navigator.of(context).pop();
   }
@@ -49,7 +56,9 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
       child: Column(
         children: [
           Text(
-            'Agrega un Ingrediente',
+            widget.ingrediente == null
+                ? 'Agrega un Ingrediente'
+                : 'Edita el Ingrediente',
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
               fontSize: 24,
@@ -128,9 +137,9 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
                 const SizedBox(height: 30),
                 Boton(
                   onTap: submit,
-                  texto: nombre == ''
+                  texto: widget.ingrediente == null
                       ? 'Agregar Ingrediente'
-                      : 'Actualizar Informacion',
+                      : 'Actualizar Información',
                 )
               ],
             ),

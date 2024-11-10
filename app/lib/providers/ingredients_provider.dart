@@ -1,5 +1,5 @@
+// Import necessary packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:app/models/ingredient.dart';
 import 'package:app/database/database_helper.dart';
 
@@ -26,7 +26,7 @@ class IngredientsNotifier extends StateNotifier<List<Ingredient>> {
     }
   }
 
-  // Adds a new ingredient or updates the cost if the ingredient already exists
+  // Adds a new ingredient if it doesn't exist, otherwise updates its cost
   Future<void> addIngredient(String name, double cost) async {
     final db = await getDatabase();
 
@@ -51,6 +51,39 @@ class IngredientsNotifier extends StateNotifier<List<Ingredient>> {
     }
 
     await loadIngredients();
+  }
+
+  // Updates an ingredient's cost in the database if it exists
+  Future<void> updateIngredient(
+      String oldName, String newName, double newCost) async {
+    final db = await getDatabase();
+
+    final ingredientToUpdate = await db.query(
+      'user_ingredients',
+      where: 'name = ?',
+      whereArgs: [oldName],
+    );
+
+    if (ingredientToUpdate.isNotEmpty) {
+      await db.update(
+        'user_ingredients',
+        {
+          'name': newName, // Update the name
+          'price': newCost // Update the cost
+        },
+        where: 'name = ?',
+        whereArgs: [oldName],
+      );
+
+      // Update the in-memory list of ingredients to reflect the changes
+      state = [
+        for (final ingredient in state)
+          if (ingredient.name == oldName)
+            Ingredient(name: newName, cost: newCost)
+          else
+            ingredient,
+      ];
+    }
   }
 
   // Deletes an ingredient from the database and updates the state

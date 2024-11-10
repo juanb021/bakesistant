@@ -237,6 +237,96 @@ class RecipesNotifier extends StateNotifier<List<Recipe>> {
     }).toList();
   }
 
+  // Update an existing recipe
+  Future<void> updateRecipe(Recipe updatedRecipe) async {
+    final db = await getDatabase();
+
+    // Fetch the existing recipe from the database by name
+    final existingRecipe = await db.query(
+      'recetas',
+      where: 'name = ?',
+      whereArgs: [updatedRecipe.name],
+    );
+
+    if (existingRecipe.isNotEmpty) {
+      // Get the recipe ID
+      final recipeId = existingRecipe.first['id'] as int;
+
+      // Update the recipe data in the 'recetas' table
+      await db.update(
+        'recetas',
+        {
+          'name': updatedRecipe.name,
+          'costo_material': updatedRecipe.materialCost,
+          'monthly_production': updatedRecipe.monthlyProduction,
+        },
+        where: 'id = ?',
+        whereArgs: [recipeId],
+      );
+
+      // Delete old ingredients and packages for this recipe to replace with the updated ones
+      await db.delete(
+        'receta_ingredientes',
+        where: 'receta_id = ?',
+        whereArgs: [recipeId],
+      );
+      await db.delete(
+        'receta_empaques',
+        where: 'receta_id = ?',
+        whereArgs: [recipeId],
+      );
+
+      // Insert the updated ingredients
+      for (var ingredientMap in updatedRecipe.ingredientList) {
+        final ingredient = ingredientMap.keys.first;
+        final quantity = ingredientMap[ingredient]!;
+
+        // Find the ingredient ID from 'user_ingredients' table
+        final ingredientId = (await db.query(
+          'user_ingredients',
+          where: 'name = ?',
+          whereArgs: [ingredient.name],
+        ))
+            .first['id'] as int;
+
+        await db.insert(
+          'receta_ingredientes',
+          {
+            'receta_id': recipeId,
+            'ingrediente_id': ingredientId,
+            'cantidad': quantity,
+          },
+        );
+      }
+
+      // Insert the updated packages
+      for (var packageMap in updatedRecipe.packageList) {
+        final package = packageMap.keys.first;
+        final quantity = packageMap[package]!;
+
+        // Find the package ID from 'user_empaques' table
+        final packageId = (await db.query(
+          'user_empaques',
+          where: 'name = ?',
+          whereArgs: [package.name],
+        ))
+            .first['id'] as int;
+
+        await db.insert(
+          'receta_empaques',
+          {
+            'receta_id': recipeId,
+            'empaque_id': packageId,
+            'cantidad': quantity,
+          },
+        );
+      }
+
+      // Reload the recipes to update the state
+      await loadRecipes();
+    }
+  }
+
   // Reset the full list of recipes
   Future<void> resetRecipes() async {
     await loadRecipes();

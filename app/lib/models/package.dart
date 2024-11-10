@@ -1,10 +1,18 @@
 class Package {
   const Package({
-    // Creates a constant Guia object with a required name and cost
     required this.name,
     required this.cost,
   });
-  // Instance variables to store each category of administrative expenses
+
   final String name;
   final double cost;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Package && other.name == name && other.cost == cost;
+  }
+
+  @override
+  int get hashCode => name.hashCode ^ cost.hashCode;
 }

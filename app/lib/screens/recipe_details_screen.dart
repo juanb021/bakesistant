@@ -1,5 +1,9 @@
 import 'package:app/models/recipe.dart';
 import 'package:app/providers/expenses_notifier.dart';
+import 'package:app/widgets/recipes/new_recipe_form.dart';
+import 'package:app/widgets/recipes/recipe_profit_controller.dart';
+import 'package:app/widgets/recipes/recipe_quantity_controller.dart';
+import 'package:app/widgets/recipes/recipe_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,10 +28,6 @@ class _RecetaDetallesState extends ConsumerState<RecipeDetailsScreen> {
   double totalWithEarnings = 0.0;
   double materialsCost = 0.0;
   double packagingCost = 0.0;
-
-  final TextEditingController _quantityController = TextEditingController();
-  final TextEditingController _packagingController = TextEditingController();
-  final TextEditingController _percentController = TextEditingController();
 
   void _onQuantityChange(int input) {
     setState(() {
@@ -94,6 +94,10 @@ class _RecetaDetallesState extends ConsumerState<RecipeDetailsScreen> {
           IconButton(
             onPressed: () {
               // Navega a NewRecetaForm para editar la recipe
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (ctx) => NewRecipeForm(
+                        receta: recipe,
+                      )));
             },
             icon: const Icon(
               Icons.edit_note,
@@ -105,352 +109,61 @@ class _RecetaDetallesState extends ConsumerState<RecipeDetailsScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _quantityController,
-                      decoration: InputDecoration(
-                        labelText: 'Cantidad de unidades',
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        prefixIcon: Icon(
-                          Icons.bakery_dining_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 34,
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        final int? input = int.tryParse(value);
-                        if (input != null) {
-                          _onQuantityChange(input);
-                        }
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: _packagingController,
-                      decoration: InputDecoration(
-                        labelText: 'Cantidad de empaques',
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        prefixIcon: Icon(
-                          Icons.shopping_bag,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 34,
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        final int? input = int.tryParse(value);
-                        if (input != null) {
-                          _onPackageChange(input);
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Ingrediente',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 100,
-                    child: Text(
-                      'Cantidad',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      'Costo',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            RecipeQuantityController(
+                onIngredientChange: _onQuantityChange,
+                onPackagingChange: _onPackageChange),
+            const RecipeRow(
+              textA: 'Ingrediente',
+              textB: 'Cantidad',
+              textC: 'Costo',
+              isBold: true,
+              size: 18,
             ),
             for (final ingredienteMap in recipe.ingredientList)
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        ingredienteMap.keys.first.name,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        (ingredienteMap.values.first * quantity)
-                            .toStringAsFixed(0),
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        ((ingredienteMap.keys.first.cost / 1000) *
-                                (ingredienteMap.values.first * quantity))
-                            .toStringAsFixed(3),
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              RecipeRow(
+                textA: ingredienteMap.keys.first.name,
+                textB:
+                    (ingredienteMap.values.first * quantity).toStringAsFixed(0),
+                textC: ((ingredienteMap.keys.first.cost / 1000) *
+                        (ingredienteMap.values.first * quantity))
+                    .toStringAsFixed(3),
+                isBold: false,
+                size: 16,
               ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Costo de materiales',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      materialsCost.toStringAsFixed(3),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Nueva sección de empaques
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Empaque',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 100,
-                    child: Text(
-                      'Cantidad',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      'Costo',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
+            RecipeRow(
+                textA: 'Costo de materiales',
+                textB: '',
+                textC: materialsCost.toStringAsFixed(2),
+                isBold: true,
+                size: 18),
+            const RecipeRow(
+                textA: 'Empaque',
+                textB: 'Cantidad',
+                textC: 'Costo',
+                isBold: true,
+                size: 18),
             for (final empaqueMap in recipe.packageList)
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        empaqueMap.keys.first.name,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        (empaqueMap.values.first * packagequantity)
-                            .toStringAsFixed(0),
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        (empaqueMap.keys.first.cost * packagequantity)
-                            .toStringAsFixed(3),
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Costo fijo por unidad',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      (expenses / recipe.monthlyProduction).toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Costo Total',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      totalCost.toString(),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                controller: _percentController,
-                decoration: InputDecoration(
-                  labelText: 'Porcentaje de Ganancia',
-                  prefixIcon: const Icon(Icons.percent),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  final double? input = double.tryParse(value);
-                  if (input != null) {
-                    _onPercentChanged(input);
-                  }
-                },
-              ),
-            ),
+              RecipeRow(
+                  textA: empaqueMap.keys.first.name,
+                  textB: (empaqueMap.values.first * packagequantity)
+                      .toStringAsFixed(0),
+                  textC: (empaqueMap.keys.first.cost * packagequantity)
+                      .toStringAsFixed(3),
+                  isBold: false,
+                  size: 16),
+            RecipeRow(
+                textA: 'Costo fijo por unidad',
+                textB: '',
+                textC: (expenses / recipe.monthlyProduction).toStringAsFixed(2),
+                isBold: true,
+                size: 18),
+            RecipeRow(
+                textA: 'Costo Total',
+                textB: '',
+                textC: totalCost.toString(),
+                isBold: true,
+                size: 18),
+            RecipeProfitController(onProfitChange: _onPercentChanged),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(

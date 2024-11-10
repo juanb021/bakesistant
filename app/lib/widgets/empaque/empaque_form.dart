@@ -1,5 +1,5 @@
 import 'package:app/models/package.dart';
-import 'package:app/providers/packages_notifier.dart';
+import 'package:app/providers/packages_provider.dart';
 import 'package:app/widgets/boton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,8 +36,15 @@ class _EmpaqueFormState extends ConsumerState<EmpaqueForm> {
     }
 
     form.currentState!.save();
+    final packagesNotifier = ref.read(packagesProvider.notifier);
 
-    ref.read(packagesProvider.notifier).addPackage(nombre, costo);
+    if (widget.empaque == null) {
+      // Si no existe un empaque, se agrega uno nuevo
+      packagesNotifier.addPackage(nombre, costo);
+    } else {
+      // Si el empaque ya existe, se actualiza
+      packagesNotifier.updatePackage(widget.empaque!.name, nombre, costo);
+    }
 
     Navigator.of(context).pop();
   }
@@ -49,7 +56,7 @@ class _EmpaqueFormState extends ConsumerState<EmpaqueForm> {
       child: Column(
         children: [
           Text(
-            'Agrega un Empaque',
+            widget.empaque == null ? 'Agrega un Empaque' : 'Edita el Empaque',
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
               fontSize: 24,
@@ -128,7 +135,7 @@ class _EmpaqueFormState extends ConsumerState<EmpaqueForm> {
                 const SizedBox(height: 30),
                 Boton(
                   onTap: submit,
-                  texto: nombre == ''
+                  texto: widget.empaque == null
                       ? 'Agregar Empaque'
                       : 'Actualizar Información',
                 )

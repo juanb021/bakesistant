@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Modules
 import 'package:app/models/package.dart';
-import 'package:app/providers/packages_notifier.dart';
+import 'package:app/providers/packages_provider.dart';
 import 'package:app/widgets/empaque/empaque_info.dart';
 
 class EmpaquesScreen extends ConsumerStatefulWidget {
