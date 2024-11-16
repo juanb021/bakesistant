@@ -93,22 +93,33 @@ class _NewRecetaFormState extends ConsumerState<NewRecipeForm> {
         packageList.add({empaque: cantidad});
       }
     }
+
+    // Crear o actualizar la receta
     Recipe updatedRecipe = Recipe(
-        name: nombre,
-        ingredientList: ingredientList,
-        packageList: packageList,
-        monthlyProduction: monthlyProduction);
+      id: widget.receta?.id, // Usar el id si existe
+      name: nombre,
+      ingredientList: ingredientList,
+      packageList: packageList,
+      monthlyProduction: monthlyProduction,
+    );
 
     if (widget.receta != null) {
+      // Actualizar la receta existente
       ref.read(recipesProvider.notifier).updateRecipe(updatedRecipe);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
           content: Text(
-        'Receta Actualizada!',
-        style: TextStyle(
-            fontSize: 18, color: Theme.of(context).colorScheme.primaryFixedDim),
-      )));
+            'Receta Actualizada!',
+            style: TextStyle(
+              fontSize: 18,
+              color: Theme.of(context).colorScheme.primaryFixedDim,
+            ),
+          ),
+        ),
+      );
       Navigator.of(context).pop();
     } else {
+      // Agregar una nueva receta
       ref
           .read(recipesProvider.notifier)
           .addRecipe(nombre, ingredientList, packageList, monthlyProduction);
@@ -160,22 +171,36 @@ class _NewRecetaFormState extends ConsumerState<NewRecipeForm> {
 
                     return Column(
                       children: [
-                        IngredientRow(
-                          avaiableIngredients: ingredientesDisponibles,
-                          ingredient: ingredienteConCantidad,
-                          index: index,
-                          ingredientQuanityList: _ingredientesConCantidad,
+                        Dismissible(
+                          key: ValueKey(index),
+                          onDismissed: (direction) {
+                            Future.delayed(Duration.zero, () {
+                              if (index < _ingredientesConCantidad.length) {
+                                setState(() {
+                                  _ingredientesConCantidad.removeAt(index);
+                                });
+                              }
+                            });
+                          },
+                          child: IngredientRow(
+                            avaiableIngredients: ingredientesDisponibles,
+                            ingredient: ingredienteConCantidad,
+                            index: index,
+                            ingredientQuanityList: _ingredientesConCantidad,
+                          ),
                         ),
-                        const SizedBox(height: 7),
+                        const SizedBox(height: 5),
                       ],
                     );
                   }),
                   const SizedBox(height: 20),
                   ElevatedButton.icon(
                     onPressed: () {
-                      setState(() {
-                        _ingredientesConCantidad
-                            .add({"ingrediente": null, "cantidad": null});
+                      Future.delayed(Duration.zero, () {
+                        setState(() {
+                          _ingredientesConCantidad
+                              .add({"ingrediente": null, "cantidad": null});
+                        });
                       });
                     },
                     icon: const Icon(Icons.add),
@@ -193,12 +218,21 @@ class _NewRecetaFormState extends ConsumerState<NewRecipeForm> {
 
                     return Column(
                       children: [
-                        PackageRow(
-                          avaiablePackages: empaquesDisponibles,
-                          package: empaqueConCantidad,
-                          index: index,
-                          packageQuanityList: _empaquesConCantidad,
+                        Dismissible(
+                          key: ValueKey(index),
+                          onDismissed: (direction) {
+                            setState(() {
+                              _empaquesConCantidad.removeAt(index);
+                            });
+                          },
+                          child: PackageRow(
+                            avaiablePackages: empaquesDisponibles,
+                            package: empaqueConCantidad,
+                            index: index,
+                            packageQuanityList: _empaquesConCantidad,
+                          ),
                         ),
+                        const SizedBox(height: 5),
                       ],
                     );
                   }),
@@ -218,6 +252,7 @@ class _NewRecetaFormState extends ConsumerState<NewRecipeForm> {
                   const SizedBox(height: 10),
                   TextFormField(
                     initialValue: recipe?.monthlyProduction.toStringAsFixed(0),
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Cantidad',
                       border: OutlineInputBorder(),

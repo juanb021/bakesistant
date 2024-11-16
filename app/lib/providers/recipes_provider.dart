@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:app/models/recipe.dart';
 import 'package:app/models/ingredient.dart';
 import 'package:app/models/package.dart';
@@ -25,7 +24,6 @@ class RecipesNotifier extends StateNotifier<List<Recipe>> {
         );
 
         final List<Map<Ingredient, double>> ingredientList = [];
-
         for (var ingredientRow in ingredientsData) {
           final ingredientData = await db.query(
             'user_ingredients',
@@ -52,7 +50,6 @@ class RecipesNotifier extends StateNotifier<List<Recipe>> {
         );
 
         final List<Map<Package, double>> packageList = [];
-
         for (var packageRow in packagesData) {
           final packageData = await db.query(
             'user_empaques',
@@ -72,6 +69,7 @@ class RecipesNotifier extends StateNotifier<List<Recipe>> {
         }
 
         return Recipe(
+          id: row['id'] as int, // Assign the recipe ID
           name: row['name'] as String,
           ingredientList: ingredientList,
           packageList: packageList,
@@ -102,51 +100,39 @@ class RecipesNotifier extends StateNotifier<List<Recipe>> {
       whereArgs: [name],
     );
 
-    // Calculate the total cost of ingredients and packages
     final recipe = Recipe(
       name: name,
       ingredientList: ingredientList,
       packageList: packageList,
       monthlyProduction: monthlyProduction,
     );
+
     final materialCost = recipe.getCost();
 
     if (existingRecipe.isNotEmpty) {
-      // Update existing recipe
+      final recipeId = existingRecipe.first['id'] as int;
+
       await db.update(
         'recetas',
         {
           'costo_material': materialCost,
           'monthly_production': monthlyProduction,
         },
-        where: 'name = ?',
-        whereArgs: [name],
+        where: 'id = ?',
+        whereArgs: [recipeId],
       );
 
-      // Delete old ingredients and packages for update
-      final recipeId = existingRecipe.first['id'] as int;
-      await db.delete(
-        'receta_ingredientes',
-        where: 'receta_id = ?',
-        whereArgs: [recipeId],
-      );
-      await db.delete(
-        'receta_empaques',
-        where: 'receta_id = ?',
-        whereArgs: [recipeId],
-      );
+      await db.delete('receta_ingredientes',
+          where: 'receta_id = ?', whereArgs: [recipeId]);
+      await db.delete('receta_empaques',
+          where: 'receta_id = ?', whereArgs: [recipeId]);
     } else {
-      // Insert new recipe
-      final recipeId = await db.insert(
-        'recetas',
-        {
-          'name': name,
-          'costo_material': materialCost,
-          'monthly_production': monthlyProduction,
-        },
-      );
+      final recipeId = await db.insert('recetas', {
+        'name': name,
+        'costo_material': materialCost,
+        'monthly_production': monthlyProduction,
+      });
 
-      // Add ingredients to receta_ingredientes table
       for (var ingredientMap in ingredientList) {
         final ingredient = ingredientMap.keys.first;
         final quantity = ingredientMap[ingredient]!;
@@ -158,17 +144,13 @@ class RecipesNotifier extends StateNotifier<List<Recipe>> {
         ))
             .first['id'] as int;
 
-        await db.insert(
-          'receta_ingredientes',
-          {
-            'receta_id': recipeId,
-            'ingrediente_id': ingredientId,
-            'cantidad': quantity,
-          },
-        );
+        await db.insert('receta_ingredientes', {
+          'receta_id': recipeId,
+          'ingrediente_id': ingredientId,
+          'cantidad': quantity,
+        });
       }
 
-      // Add packages to receta_empaques table
       for (var packageMap in packageList) {
         final package = packageMap.keys.first;
         final quantity = packageMap[package]!;
@@ -180,156 +162,70 @@ class RecipesNotifier extends StateNotifier<List<Recipe>> {
         ))
             .first['id'] as int;
 
-        await db.insert(
-          'receta_empaques',
-          {
-            'receta_id': recipeId,
-            'empaque_id': packageId,
-            'cantidad': quantity,
-          },
-        );
+        await db.insert('receta_empaques', {
+          'receta_id': recipeId,
+          'empaque_id': packageId,
+          'cantidad': quantity,
+        });
       }
     }
 
     await loadRecipes();
   }
 
-  // Delete a recipe from the database
-  Future<void> deleteRecipe(String name) async {
+  // Delete a recipe by ID
+  Future<void> deleteRecipeById(int id) async {
     final db = await getDatabase();
 
-    final existingRecipe = await db.query(
-      'recetas',
-      where: 'name = ?',
-      whereArgs: [name],
-    );
+    await db
+        .delete('receta_ingredientes', where: 'receta_id = ?', whereArgs: [id]);
+    await db.delete('receta_empaques', where: 'receta_id = ?', whereArgs: [id]);
+    await db.delete('recetas', where: 'id = ?', whereArgs: [id]);
 
-    if (existingRecipe.isNotEmpty) {
-      final recipeId = existingRecipe.first['id'] as int;
-
-      // Delete ingredients and packages for the recipe
-      await db.delete(
-        'receta_ingredientes',
-        where: 'receta_id = ?',
-        whereArgs: [recipeId],
-      );
-      await db.delete(
-        'receta_empaques',
-        where: 'receta_id = ?',
-        whereArgs: [recipeId],
-      );
-
-      // Delete the recipe
-      await db.delete(
-        'recetas',
-        where: 'id = ?',
-        whereArgs: [recipeId],
-      );
-
-      await loadRecipes();
-    }
+    await loadRecipes();
   }
 
-  // Filter recipes by name
-  void filterRecipesByName(String query) {
-    state = state.where((recipe) {
-      return recipe.name.toLowerCase().contains(query.toLowerCase());
-    }).toList();
-  }
-
-  // Update an existing recipe
-  Future<void> updateRecipe(Recipe updatedRecipe) async {
+  // Update an existing recipe by ID
+  Future<void> updateRecipe(Recipe recipe) async {
     final db = await getDatabase();
 
-    // Fetch the existing recipe from the database by name
-    final existingRecipe = await db.query(
+    await db.update(
       'recetas',
-      where: 'name = ?',
-      whereArgs: [updatedRecipe.name],
+      {
+        'name': recipe.name,
+        'monthly_production': recipe.monthlyProduction,
+        'costo_material': recipe.getCost(),
+      },
+      where: 'id = ?',
+      whereArgs: [recipe.id], // Usamos el id para identificar la receta
     );
 
-    if (existingRecipe.isNotEmpty) {
-      // Get the recipe ID
-      final recipeId = existingRecipe.first['id'] as int;
-
-      // Update the recipe data in the 'recetas' table
-      await db.update(
-        'recetas',
-        {
-          'name': updatedRecipe.name,
-          'costo_material': updatedRecipe.materialCost,
-          'monthly_production': updatedRecipe.monthlyProduction,
-        },
-        where: 'id = ?',
-        whereArgs: [recipeId],
-      );
-
-      // Delete old ingredients and packages for this recipe to replace with the updated ones
-      await db.delete(
-        'receta_ingredientes',
-        where: 'receta_id = ?',
-        whereArgs: [recipeId],
-      );
-      await db.delete(
-        'receta_empaques',
-        where: 'receta_id = ?',
-        whereArgs: [recipeId],
-      );
-
-      // Insert the updated ingredients
-      for (var ingredientMap in updatedRecipe.ingredientList) {
-        final ingredient = ingredientMap.keys.first;
-        final quantity = ingredientMap[ingredient]!;
-
-        // Find the ingredient ID from 'user_ingredients' table
-        final ingredientId = (await db.query(
-          'user_ingredients',
-          where: 'name = ?',
-          whereArgs: [ingredient.name],
-        ))
-            .first['id'] as int;
-
-        await db.insert(
-          'receta_ingredientes',
-          {
-            'receta_id': recipeId,
-            'ingrediente_id': ingredientId,
-            'cantidad': quantity,
-          },
-        );
-      }
-
-      // Insert the updated packages
-      for (var packageMap in updatedRecipe.packageList) {
-        final package = packageMap.keys.first;
-        final quantity = packageMap[package]!;
-
-        // Find the package ID from 'user_empaques' table
-        final packageId = (await db.query(
-          'user_empaques',
-          where: 'name = ?',
-          whereArgs: [package.name],
-        ))
-            .first['id'] as int;
-
-        await db.insert(
-          'receta_empaques',
-          {
-            'receta_id': recipeId,
-            'empaque_id': packageId,
-            'cantidad': quantity,
-          },
-        );
-      }
-
-      // Reload the recipes to update the state
-      await loadRecipes();
-    }
+    // Cargar las recetas actualizadas desde la base de datos
+    await loadRecipes();
   }
 
-  // Reset the full list of recipes
+  void filterRecipesByName(String name) {
+    // Filtra las recetas según el nombre proporcionado
+    state = state
+        .where(
+            (recipe) => recipe.name.toLowerCase().contains(name.toLowerCase()))
+        .toList();
+  }
+
   Future<void> resetRecipes() async {
-    await loadRecipes();
+    final db = await getDatabase();
+    final List<Map<String, dynamic>> recipesData = await db.query('recetas');
+
+    // Mapear los datos de la base de datos a objetos Recipe
+    state = recipesData.map((data) {
+      return Recipe(
+        id: data['id'],
+        name: data['name'],
+        monthlyProduction: data['monthly_production'],
+        ingredientList: [], // Cargar ingredientes si es necesario
+        packageList: [], // Cargar empaques si es necesario
+      );
+    }).toList();
   }
 }
 

@@ -12,7 +12,6 @@ ThemeData theme = ThemeData(
         255, 63, 224, 208), // Adjust this color to change the theme
   ),
 );
-
 void main() {
   runApp(
     const ProviderScope(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:app/widgets/boton.dart';
-import 'package:app/database/database_helper.dart';
+// import 'package:app/database/database_helper.dart';
 import 'package:app/providers/expenses_notifier.dart';
 import 'package:app/models/administrative_expenses.dart';
 
@@ -301,7 +301,7 @@ class ExpenseForm extends ConsumerWidget {
         ),
         Boton(onTap: submit, texto: 'Actualizar informacion'),
         const SizedBox(height: 16),
-        const Boton(onTap: deleteDatabase, texto: 'Eliminar base de datos'),
+        // const Boton(onTap: deleteDatabase, texto: 'Eliminar base de datos'),
       ],
     );
   }

@@ -32,7 +32,7 @@ Future<Database> getDatabase() async {
       await db.execute("""
           CREATE TABLE IF NOT EXISTS recetas (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
-          name TEXT UNIQUE,
+          name TEXT NOT NULL,
           costo_material REAL,
           monthly_production REAL
         )""");
@@ -43,7 +43,7 @@ Future<Database> getDatabase() async {
           receta_id INTEGER,
           ingrediente_id INTEGER,
           cantidad REAL,
-          FOREIGN KEY (receta_id) REFERENCES recetas(id),
+          FOREIGN KEY (receta_id) REFERENCES recetas(id) ON DELETE CASCADE,
           FOREIGN KEY (ingrediente_id) REFERENCES user_ingredients(id),
           PRIMARY KEY (receta_id, ingrediente_id)
         )""");
@@ -62,7 +62,7 @@ Future<Database> getDatabase() async {
           receta_id INTEGER,
           empaque_id INTEGER,
           cantidad REAL,
-          FOREIGN KEY (receta_id) REFERENCES recetas(id),
+          FOREIGN KEY (receta_id) REFERENCES recetas(id) ON DELETE CASCADE,
           FOREIGN KEY (empaque_id) REFERENCES user_empaques(id),
           PRIMARY KEY (receta_id, empaque_id)
         )""");

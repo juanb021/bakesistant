@@ -3,7 +3,16 @@ import 'package:app/models/package.dart';
 import 'package:app/models/ingredient.dart';
 
 class Recipe {
+  int? id; // Cambiado a opcional
+  String name;
+  List<Map<Ingredient, double>> ingredientList;
+  List<Map<Package, double>> packageList;
+  double monthlyProduction;
+  double? materialCost;
+  double? salePrice;
+
   Recipe({
+    this.id, // id opcional
     required this.name,
     required this.ingredientList,
     required this.packageList,
@@ -12,31 +21,8 @@ class Recipe {
     this.salePrice,
   });
 
-  final String name;
-  final List<Map<Ingredient, double>> ingredientList;
-  final List<Map<Package, double>> packageList;
-  final double monthlyProduction;
-  double? materialCost;
-  double? salePrice;
-
   double getCost() {
-    double totalCost = 0;
-
-    for (final ingredientMap in ingredientList) {
-      final ingredient = ingredientMap.keys.first;
-      final amount = ingredientMap[ingredient] ?? 0;
-
-      totalCost += ingredient.cost * amount;
-    }
-    for (final packageMap in packageList) {
-      final package = packageMap.keys.first;
-      final amount = packageMap[package] ?? 0;
-
-      totalCost += package.cost * amount;
-    }
-
-    materialCost = totalCost;
-
-    return materialCost!;
+    // Implementación del cálculo
+    return 0.0; // Ejemplo
   }
 }

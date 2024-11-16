@@ -29,7 +29,7 @@ class _RecetaCardState extends ConsumerState<RecetaCard> {
     return Dismissible(
       key: ValueKey(widget.receta.name),
       onDismissed: (direction) {
-        ref.read(recipesProvider.notifier).deleteRecipe(widget.receta.name);
+        ref.read(recipesProvider.notifier).deleteRecipeById(widget.receta.id!);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
