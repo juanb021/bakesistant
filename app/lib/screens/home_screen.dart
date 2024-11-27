@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
         body: _buildContent(), // Display the appropriate content
         bottomNavigationBar: BotNavigation(
           selectedPage: _selectedPageIndex,

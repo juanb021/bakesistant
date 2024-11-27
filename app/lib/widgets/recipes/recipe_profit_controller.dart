@@ -28,12 +28,12 @@ class __RecipeProfitControllerState extends State<RecipeProfitController> {
               decoration: InputDecoration(
                 labelText: 'Ganancia',
                 labelStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   fontWeight: FontWeight.bold,
                 ),
                 prefixIcon: Icon(
                   Icons.percent,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   size: 34,
                 ),
               ),

@@ -12,21 +12,28 @@ class Boton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 32,
-          vertical: 12,
-        ),
-        minimumSize: const Size(250, 36),
-      ),
-      child: Text(
-        texto,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 16,
+    return InkWell(
+      onTap: onTap,
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 25),
+        elevation: 10,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.circular(8)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                texto,
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );

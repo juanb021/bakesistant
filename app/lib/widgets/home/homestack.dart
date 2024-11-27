@@ -1,7 +1,8 @@
-import 'package:app/widgets/home/login_form.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:app/widgets/boton.dart';
+import 'package:app/services/auth_service.dart';
 import 'package:app/screens/expenses_screen.dart';
 
 class Homestack extends StatefulWidget {
@@ -12,6 +13,18 @@ class Homestack extends StatefulWidget {
 }
 
 class _HomestackState extends State<Homestack> {
+  String? userName;
+
+  @override
+  void initState() {
+    super.initState();
+    // Obtén el nombre del usuario en el initState
+    final user = FirebaseAuth.instance.currentUser;
+    setState(() {
+      userName = user?.email ?? "Usuario"; // Nombre o "Usuario" por defecto
+    });
+  }
+
   void openExpenses() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (ctx) => const ExpensesScreen()));
@@ -20,29 +33,35 @@ class _HomestackState extends State<Homestack> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Card(
-          elevation: 16,
-          clipBehavior: Clip.hardEdge,
-          margin: const EdgeInsets.all(20),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Theme.of(context).colorScheme.primaryFixed,
-              Theme.of(context).colorScheme.primaryFixedDim,
-            ])),
-            child: const LoginForm(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Boton(
+            onTap: () {},
+            texto: 'Configuracion',
           ),
-        ),
-        const SizedBox(height: 20),
-        Boton(
-          onTap: openExpenses,
-          texto: 'Configurar Gastos',
-        ),
-      ],
-    ));
+          const SizedBox(height: 20),
+          Boton(onTap: openExpenses, texto: 'Configurar Gastos'),
+          const SizedBox(height: 20),
+          TextButton.icon(
+            onPressed: () {
+              AuthService authService = AuthService();
+              authService.logout();
+            },
+            label: Text(
+              'Cerrar Sesion',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+            icon: Icon(
+              Icons.logout,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

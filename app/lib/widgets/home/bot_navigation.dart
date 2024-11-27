@@ -20,18 +20,27 @@ class _BotNavigationState extends State<BotNavigation> {
       currentIndex: widget.selectedPage,
       onTap: widget.onSelectPage,
       selectedItemColor: Theme.of(context).colorScheme.primary,
-      unselectedItemColor: Theme.of(context).colorScheme.secondary,
+      unselectedItemColor: Theme.of(context).colorScheme.onTertiaryContainer,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(
+            Icons.home,
+            size: 30,
+          ),
           label: 'Inicio',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.menu_book_rounded),
+          icon: Icon(
+            Icons.menu_book_rounded,
+            size: 30,
+          ),
           label: 'Recetario',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.list),
+          icon: Icon(
+            Icons.list,
+            size: 30,
+          ),
           label: 'Materiales',
         ),
       ],

@@ -50,7 +50,7 @@ class _IngredientInfoState extends ConsumerState<IngredientInfo> {
           margin: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(16),
@@ -61,7 +61,7 @@ class _IngredientInfoState extends ConsumerState<IngredientInfo> {
               Text(
                 widget.ingrediente.name,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   fontSize: 18,
                 ),
               ),
@@ -71,7 +71,7 @@ class _IngredientInfoState extends ConsumerState<IngredientInfo> {
                 child: Text(
                   '\$ ${widget.ingrediente.cost.toString()}',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

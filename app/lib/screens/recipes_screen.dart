@@ -46,11 +46,11 @@ class _RecetasScreenState extends ConsumerState<RecipesScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primaryFixed,
-          title: Text(
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          title: const Text(
             'Tus Recetas',
             style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: Colors.white,
             ),
           ),
           actions: [
@@ -59,6 +59,7 @@ class _RecetasScreenState extends ConsumerState<RecipesScreen> {
               icon: const Icon(
                 Icons.add,
                 size: 34,
+                color: Colors.white,
               ),
             ),
           ],

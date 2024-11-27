@@ -83,11 +83,11 @@ class _RecetaDetallesState extends ConsumerState<RecipeDetailsScreen> {
             .toStringAsFixed(2);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           recipe.name,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
+          style: const TextStyle(
+            color: Colors.white,
           ),
         ),
         actions: [
@@ -102,6 +102,7 @@ class _RecetaDetallesState extends ConsumerState<RecipeDetailsScreen> {
             icon: const Icon(
               Icons.edit_note,
               size: 34,
+              color: Colors.white,
             ),
           ),
         ],
@@ -171,7 +172,7 @@ class _RecetaDetallesState extends ConsumerState<RecipeDetailsScreen> {
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                 ),
               ),
             ),

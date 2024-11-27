@@ -58,7 +58,7 @@ class _EmpaqueFormState extends ConsumerState<EmpaqueForm> {
           Text(
             widget.empaque == null ? 'Agrega un Empaque' : 'Edita el Empaque',
             style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -74,17 +74,19 @@ class _EmpaqueFormState extends ConsumerState<EmpaqueForm> {
                   decoration: InputDecoration(
                     labelText: 'Empaque',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontWeight: FontWeight.w500,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),
@@ -104,17 +106,19 @@ class _EmpaqueFormState extends ConsumerState<EmpaqueForm> {
                   decoration: InputDecoration(
                     labelText: 'Costo',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontWeight: FontWeight.w500,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),

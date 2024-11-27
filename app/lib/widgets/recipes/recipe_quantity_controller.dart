@@ -31,12 +31,12 @@ class __RecipeQuantityControllerState extends State<RecipeQuantityController> {
               decoration: InputDecoration(
                 labelText: 'Cantidad de unidades',
                 labelStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   fontWeight: FontWeight.bold,
                 ),
                 prefixIcon: Icon(
                   Icons.bakery_dining_rounded,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   size: 34,
                 ),
               ),
@@ -56,12 +56,12 @@ class __RecipeQuantityControllerState extends State<RecipeQuantityController> {
               decoration: InputDecoration(
                 labelText: 'Cantidad de empaques',
                 labelStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   fontWeight: FontWeight.bold,
                 ),
                 prefixIcon: Icon(
                   Icons.shopping_bag,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   size: 34,
                 ),
               ),

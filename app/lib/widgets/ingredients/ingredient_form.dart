@@ -60,7 +60,7 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
                 ? 'Agrega un Ingrediente'
                 : 'Edita el Ingrediente',
             style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -76,17 +76,19 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
                   decoration: InputDecoration(
                     labelText: 'Ingrediente',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontWeight: FontWeight.w500,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),
@@ -106,17 +108,19 @@ class _IngredientFormState extends ConsumerState<IngredientForm> {
                   decoration: InputDecoration(
                     labelText: 'Costo',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontWeight: FontWeight.w500,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),

@@ -112,7 +112,7 @@ class _NewRecetaFormState extends ConsumerState<NewRecipeForm> {
             'Receta Actualizada!',
             style: TextStyle(
               fontSize: 18,
-              color: Theme.of(context).colorScheme.primaryFixedDim,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),

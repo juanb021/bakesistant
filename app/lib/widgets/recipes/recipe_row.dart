@@ -29,7 +29,7 @@ class RecipeRow extends StatelessWidget {
               textA,
               style: TextStyle(
                 fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.onTertiaryContainer,
                 fontSize: size,
               ),
             ),
@@ -41,7 +41,7 @@ class RecipeRow extends StatelessWidget {
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.onTertiaryContainer,
                 fontSize: size,
               ),
             ),
@@ -53,7 +53,7 @@ class RecipeRow extends StatelessWidget {
               textAlign: TextAlign.end,
               style: TextStyle(
                 fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.onTertiaryContainer,
                 fontSize: size,
               ),
             ),

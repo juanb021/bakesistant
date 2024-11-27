@@ -48,7 +48,7 @@ class _EmpaqueInfoState extends ConsumerState<EmpaqueInfo> {
           margin: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(16),
@@ -59,7 +59,7 @@ class _EmpaqueInfoState extends ConsumerState<EmpaqueInfo> {
               Text(
                 widget.empaque.name,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   fontSize: 18,
                 ),
               ),
@@ -69,7 +69,7 @@ class _EmpaqueInfoState extends ConsumerState<EmpaqueInfo> {
                 child: Text(
                   '\$ ${widget.empaque.cost.toString()}',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

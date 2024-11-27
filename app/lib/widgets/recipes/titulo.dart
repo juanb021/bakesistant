@@ -15,7 +15,7 @@ class Titulo extends StatelessWidget {
         Text(
           titulo,
           style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.onTertiaryContainer,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),

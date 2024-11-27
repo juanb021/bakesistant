@@ -47,11 +47,11 @@ class _MaterialsScreenState extends ConsumerState<MaterialsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           _isIngredients ? 'Lista de Ingredientes' : 'Lista de Empaques',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
+          style: const TextStyle(
+            color: Colors.white,
           ),
         ),
         actions: [
@@ -60,12 +60,14 @@ class _MaterialsScreenState extends ConsumerState<MaterialsScreen> {
               icon: const Icon(
                 Icons.swap_horiz,
                 size: 30,
+                color: Colors.white,
               )),
           IconButton(
               onPressed: _openAddItemOverlay,
               icon: const Icon(
                 Icons.add,
                 size: 34,
+                color: Colors.white,
               )),
         ],
       ),

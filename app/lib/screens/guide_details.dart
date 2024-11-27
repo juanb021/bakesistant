@@ -15,8 +15,11 @@ class GuideDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(guide.titulo),
-        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
+        title: Text(
+          guide.titulo,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -25,7 +28,7 @@ class GuideDetails extends StatelessWidget {
             guide.contenido,
             textAlign: TextAlign.justify,
             style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
               fontSize: 18,
             ),
           ),

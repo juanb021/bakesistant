@@ -26,20 +26,23 @@ class _ExpensesScreenState extends ConsumerState<ExpensesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
-        title: const Text('Configura tus gastos'),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: const Text(
+          'Configura tus gastos',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
             onPressed: openHelp,
-            icon: Icon(
+            icon: const Icon(
               Icons.help_outline,
               size: 34,
-              color: Theme.of(context).colorScheme.primary,
+              color: Colors.white,
             ),
           )
         ],
       ),
-      // Displays the expense form
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       body: const SingleChildScrollView(child: ExpenseForm()),
     );
   }

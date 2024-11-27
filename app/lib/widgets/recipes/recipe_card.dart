@@ -45,7 +45,7 @@ class _RecetaCardState extends ConsumerState<RecetaCard> {
           margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(16),
@@ -56,7 +56,7 @@ class _RecetaCardState extends ConsumerState<RecetaCard> {
               Text(
                 widget.receta.name,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

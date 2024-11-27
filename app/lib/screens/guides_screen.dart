@@ -24,10 +24,10 @@ class GuidesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
-        title: Text(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: const Text(
           'Ayuda',
-          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: ListView.builder(
@@ -41,18 +41,13 @@ class GuidesScreen extends StatelessWidget {
             margin: const EdgeInsets.all(16),
             child: Container(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Theme.of(context).colorScheme.primaryFixed,
-                  Theme.of(context).colorScheme.primaryFixedDim,
-                ]),
-              ),
+              color: Theme.of(context).colorScheme.secondary,
               child: Text(
                 infoGuias[index].titulo,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Colors.white,
                 ),
               ),
             ),

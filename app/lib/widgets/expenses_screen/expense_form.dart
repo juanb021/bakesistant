@@ -49,24 +49,26 @@ class ExpenseForm extends ConsumerWidget {
                   decoration: InputDecoration(
                     labelText: 'Alquiler',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontSize: 20,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),
                   keyboardType: TextInputType.number,
                   autocorrect: false,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -91,24 +93,26 @@ class ExpenseForm extends ConsumerWidget {
                   decoration: InputDecoration(
                     labelText: 'Depreciacion',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontSize: 20,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),
                   keyboardType: TextInputType.number,
                   autocorrect: false,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -133,24 +137,26 @@ class ExpenseForm extends ConsumerWidget {
                   decoration: InputDecoration(
                     labelText: 'Gastos de ventas',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontSize: 20,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),
                   keyboardType: TextInputType.number,
                   autocorrect: false,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -175,24 +181,26 @@ class ExpenseForm extends ConsumerWidget {
                   decoration: InputDecoration(
                     labelText: 'Nomina',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontSize: 20,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),
                   keyboardType: TextInputType.number,
                   autocorrect: false,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -217,24 +225,26 @@ class ExpenseForm extends ConsumerWidget {
                   decoration: InputDecoration(
                     labelText: 'Papeleria',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontSize: 20,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),
                   keyboardType: TextInputType.number,
                   autocorrect: false,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -259,24 +269,26 @@ class ExpenseForm extends ConsumerWidget {
                   decoration: InputDecoration(
                     labelText: 'Servicios',
                     labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
                       fontSize: 20,
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
                     ),
                   ),
                   keyboardType: TextInputType.number,
                   autocorrect: false,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {

@@ -69,7 +69,9 @@ class _EmpaquesScreenState extends ConsumerState<EmpaquesScreen> {
                           Text(
                             'Nombre',
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onTertiaryContainer,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -77,7 +79,9 @@ class _EmpaquesScreenState extends ConsumerState<EmpaquesScreen> {
                           Text(
                             'Precio',
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onTertiaryContainer,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
